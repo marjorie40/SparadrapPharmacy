@@ -38,22 +38,28 @@ public class Physician extends People {
 
     /**
      * RESEARCH PHYSICIAN BY THE LAST NAME
-     * @param lastName
+     * @param getLastName
      * @return Physician
      */
 
-    public static Physician searchPhysician(String lastName)  {
+    public static Physician searchPhysician(String getLastName)  {
         for (int i = 0; i < listPhysicians.size(); i++) {
-            if (listPhysicians.get(i).getLastName().equals(lastName.trim().toLowerCase())) {
+            if (listPhysicians.get(i).getLastName().equals(getLastName.trim().toLowerCase())) {
                 return listPhysicians.get(i);
             }
         }
         return null;
     }
 
-    public void addPhysician(Physician phd) {
-        listPhysicians.add(phd);
-        System.out.println("Personne ajoutée : " + phd.toString());
+    /**
+     * ADD PHYSICIAN , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
+     * @param Physician
+     */
+
+    public static void addPhysician(Physician Physician) {
+        listPhysicians.add(Physician);
+
+        System.out.println(" Médecin ajouté : " + Physician.toString());
     }
 
 

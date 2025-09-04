@@ -1,7 +1,10 @@
 package view;
 
 import exception.MyException;
+import model.Mutual;
 import model.Physician;
+import model.Patient;
+import model.Drug;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -144,11 +147,50 @@ public class PharmaSee {
     }
 
     /**
+     * DISPLAY PHYSICIAN'S LIST
+     * @param mutuals ArrayList
+     */
+    public static void displayMutualList(ArrayList mutuals){
+
+        System.out.println("******** Affichage des mutuelles : ********");
+        for (int i = 0; i < Mutual.mutualList.size(); i++) {
+
+            System.out.println(Mutual.mutualList.get(i).toString());
+        }
+    }
+
+    /**
+     * DISPLAY PATIENT'S LIST
+     * @param patients ArrayList
+     */
+    public static void displayListPatients(ArrayList patients){
+
+        System.out.println("******** Affichage des patients : ********");
+        for (int i = 0; i < Patient.listPatients.size(); i++) {
+
+            System.out.println(Patient.listPatients.get(i).toString());
+        }
+    }
+
+    /**
+     * DISPLAY DRUGS' LIST
+     * @param drugs ArrayList
+     */
+    public static void displayDrugsList(ArrayList drugs){
+
+        System.out.println("******** Affichage des médicaments : ********");
+        for (int i = 0; i < Drug.drugsList.size(); i++) {
+
+            System.out.println(Drug.drugsList.get(i).toString());
+        }
+    }
+
+    /**
      * CREATION OF A PHYSICIAN
      *
      */
     public static void createPhysician() {
-        System.out.println("Créer et ajouter un médecin :");
+        afficheMessage(" +++++++++++  Créer et ajouter un médecin : ++++++++++ ",0);
         System.out.println("Merci de saisir nom du docteur. ");
         lastName = sc.nextLine();
         System.out.println("Le prénom du docteur.");
@@ -169,6 +211,26 @@ public class PharmaSee {
 
     }
 
+    /**
+     * APPROVAL, BACK OR RETURN TO THE MENU
+     * @throws MyException
+     */
+    public static void approval() throws MyException {
+        System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o / " +
+                "pour retourner à l'étape précédente, tapez r / " +
+                "pour vous rendre sur le menu principal, tapez m");
+        char choice = sc.nextLine().charAt(0);
+        if  (choice == 'm') {
+            afficheMessage("-----> Vous voici de retour dans le menu principal : ",0);
+            displayMenu();
+        } else if (choice == 'r') {
+            afficheMessage("-----> Vous voici de retour à l'étape précédente : ",0);
+            // a réfléchir pour factoriser - à completer suivant l'endroit implémenter
+        } else if (choice == 'o') {
+            afficheMessage(" Très bien, poursuivons : ",1);
+            // a réfléchir pour factoriser - à completer suivant l'endroit implémenter
+        }
+    }
 
     /**
      * AFFICHAGE MESSAGE ERREUR EN ROUGE

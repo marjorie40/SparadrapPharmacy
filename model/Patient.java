@@ -2,12 +2,15 @@ package model;
 
 import exception.MyException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Patient extends People {
     private String socialSecurityNumber;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth = LocalDate.now();
     private Mutual mutual;
     private String referingPhysician;
     private String REGEX_SOCIALNUM = "^[0-9]{13}$";
@@ -15,7 +18,7 @@ public class Patient extends People {
 
     public static ArrayList<Patient> listPatients = new ArrayList<Patient>();
 
-    public Patient (String lastName, String firstName, Date dateOfBirth, String email,
+    public Patient (String lastName, String firstName, LocalDate dateOfBirth, String email,
                     String phoneNumber, String address, String postCode, String city,
                     String socialSecurityNumber, String referingPhysician, Mutual mutual ) throws MyException {
         super(lastName, firstName, email, phoneNumber, address, postCode, city);
@@ -36,12 +39,12 @@ public class Patient extends People {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return this.dateOfBirth;
     }
-    public void setDateOfBirth(Date dateOfBirth) throws MyException {
-        if (dateOfBirth == null || dateOfBirth.before(new Date(1899/12/10))) {
-            throw new MyException("La date de naissance n'est pas valide, veuillez saisir une date au format : AAAA / MM / JJ .");
+    public void setDateOfBirth(LocalDate dateOfBirth) throws MyException {
+        if (dateOfBirth == null ) {
+            throw new MyException("La date de naissance n'est pas valide, veuillez saisir une date au format : AAAA-MM-JJ .");
         }
         this.dateOfBirth = dateOfBirth;
     }
@@ -79,14 +82,14 @@ public class Patient extends People {
 
     @Override
     public String toString() {
-        return "Patient{"+ this.getLastName() + this.getFirstName()+
+        return "Patient{ "+ this.getLastName()+" " + this.getFirstName()+
                 ", adresse " + this.getAddress() + ", " + this.getPostCode() + " " + this.getCity() +
-                ", dateOfBirth= " + this.getDateOfBirth() +
+                ", date de naissance : " + this.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
                 ", Email : " + this.getEmail() +
                 ", Téléphone : " +  this.getPhoneNumber() +
                 " N° Sécurité Social = " + this.getSocialSecurityNumber() + '\'' +
                 ", Mutuelle : " + this.getMutual() +
-                ", Médecin Traitant : " + this.getReferingPhysician() + '\'' +
+                ", Médecin Traitant : Dr " + this.getReferingPhysician() + '\'' +
                 '}';
     }
 }
