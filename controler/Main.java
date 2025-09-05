@@ -1,10 +1,7 @@
 package controler;
 
 import exception.MyException;
-import model.Drug;
-import model.Mutual;
-import model.Patient;
-import model.Physician;
+import model.*;
 import view.PharmaSee;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,8 +19,6 @@ import static model.Physician.*;
 public class Main {
 
 
-
-
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws MyException {
@@ -31,22 +26,53 @@ public class Main {
         System.out.println("Hello and welcome to the Sparadrap Pharmacy Management System :)");
         PharmaSee.afficheMessage("***********  Bienvenue  **********", 1);
 
+        //PharmaSee.approval();
+
+        //Créer un patient (pas de date de naissance, pas d'ajout dans la listPatients)
+        PharmaSee.createPatient();
 
 
+//        PAS TESTER A FAIRE LUNDI
+//        try {
+//            Patient patient = new Patient (
+//                    PharmaSee.getLastName(),
+//                    PharmaSee.getFirstName(),
+//                    PharmaSee.getEmail(),
+//                    PharmaSee.getAddress(),PharmaSee.getPhoneNumber(),PharmaSee.getPostCode(),PharmaSee.getCity(), PharmaSee.getPhysician(),PharmaSee.);
+//
+//            Patient.listPatients.add(patient);
+//
+
+
+
+//        //choix des medecins par nom
+//        PharmaSee.displayListPhysicianName(listPhysicians);
+//
+//        //choix de medecin
+//        PharmaSee.choicePhysician(1);
 
 //        // affichage de la liste des médicaments OK
-//         PharmaSee.displayDrugsList(drugsList);
+//        PharmaSee.displayDrugsList(drugsList);
+
+//        //affichage liste des patients OK
+//        PharmaSee.displayListPatientsName(listPatients);
+
+//
+//        //affichage choix et choix patient OK
+//        PharmaSee.choicePatient(1);
+
 //
 //        // affichage de la liste des patients OK
 //        PharmaSee.displayListPatients(listPatients);
 
-    //test approval ok à compléter ou modifier
+    //test approval PLUS ok à compléter ou modifier
         // PharmaSee.approval();
 //
 //        // Afficher la liste des médecins
 //        PharmaSee.displayListPhysician(listPhysicians);
+
 //        //Créer un médecin en console avec Exception, Ajout du nouveau medecin a la liste puis afficher la nouvelle liste
-//        PharmaSee.createPhysician();
+        PharmaSee.createPhysician();
 //        try {
 //            Physician physician = new Physician (PharmaSee.getLastName(),PharmaSee.getFirstName(),
 //                    PharmaSee.getEmail(), PharmaSee.getPhoneNumber(),
@@ -130,6 +156,8 @@ public class Main {
             drugsList.add(drug2);
             drugsList.add(drug3);
             drugsList.add(drug4);
+
+         //   Prescription prescription1 = new Prescription(("05/09/2025) ", physician1, patient1, "Paracétamol");
 
 
         }

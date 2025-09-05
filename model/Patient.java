@@ -80,6 +80,17 @@ public class Patient extends People {
     }
 
 
+    /**
+     * ADD PATIENT , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
+     * @param Patient
+     */
+
+    public static void addPatient(Patient Patient) {
+        listPatients.add(Patient);
+
+        System.out.println(" Le nouveau patient est ajouté : " + Patient.toString());
+    }
+
     @Override
     public String toString() {
         return "Patient{ "+ this.getLastName()+" " + this.getFirstName()+

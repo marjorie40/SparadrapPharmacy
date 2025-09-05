@@ -1,5 +1,7 @@
 package model;
 
+import exception.MyException;
+
 import java.util.ArrayList;
 
 public class Mutual {
@@ -102,16 +104,25 @@ public class Mutual {
         this.mutualList = mutualList;
     }
 
-    public void displayMutual() {
+    /**
+     * DISPLAY MUTUAL *** A TESTER
+     * @throws
+     */
+    public void displayMutual() throws MyException {
         if (mutualList.isEmpty()) {
-            System.out.println("La liste est vide.");
+            throw new MyException("La liste est vide, veuillez créer une nouvelle mutuelle. ");
         } else {
             for (Mutual mutual : mutualList) {
                 System.out.println(mutual.getName());
             }
         }
     }
-    public void deleteMutual() {
+
+    /**
+     * DELETE MUTUAL *** A TESTER
+     * @param mutual
+      */
+    public void deleteMutual(Mutual mutual) {
         mutualList.remove(this);
     }
 

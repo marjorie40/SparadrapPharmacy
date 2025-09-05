@@ -2,10 +2,12 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class Prescription {
-    private LocalDate today = LocalDate.now();
+    private LocalDate today = LocalDate.parse("Date d'émission : ", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     private Physician physician;
     private Patient patient;
     private ArrayList<Drug> drugs;

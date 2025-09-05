@@ -81,11 +81,13 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
         }
     }
     public ArrayList <Drug> getDrugs() {
-        return drugsList;
+
+    return drugsList;
     }
 
     public void setDrugsList(ArrayList<Drug> drugsList) {
-        this.drugsList = drugsList;
+
+    this.drugsList = drugsList;
     }
 
     @Override

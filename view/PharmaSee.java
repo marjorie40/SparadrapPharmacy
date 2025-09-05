@@ -6,8 +6,12 @@ import model.Physician;
 import model.Patient;
 import model.Drug;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static model.Physician.addPhysician;
+import static model.Physician.listPhysicians;
 
 public class PharmaSee {
 
@@ -26,6 +30,10 @@ public class PharmaSee {
     private static String city;
     private static String postCode;
     private static String rpps;
+    private static String socialSecurityNumber;
+    private static LocalDate dateOfBirth = LocalDate.of(1920,1,1);
+    private static Mutual mutual;
+    private static String referingPhysician;
 
     public static String getLastName() {
         return lastName;
@@ -63,8 +71,21 @@ public class PharmaSee {
         return physician;
     }
 
+    public String getReferingPhysician() {
+        return referingPhysician;
+    }
 
+    public Mutual getMutual() {
+        return mutual;
+    }
 
+    public  LocalDate getDateOfBirth() {
+        return this.dateOfBirth;
+    }
+
+    public String getSocialSecurityNumber() {
+        return this.socialSecurityNumber;
+    }
 
     private static Physician physician;
 
@@ -147,6 +168,38 @@ public class PharmaSee {
     }
 
     /**
+     * DISPLAY PHYSICIAN'S LASTNAME AND FIRSTNAME LIST
+     * @param physiciansName ArrayList
+     */
+    public static void displayListPhysicianName(ArrayList physiciansName){
+
+        System.out.println("******** Affichage des noms des médecins : ********");
+        for (int i = 0; i < Physician.listPhysicians.size(); i++) {
+
+            System.out.print((i+1) + " - " + "Dr " + Physician.listPhysicians.get(i).getLastName().toUpperCase());
+            System.out.println(" " +Physician.listPhysicians.get(i).getFirstName());
+        }
+    }
+
+    /**
+     * USER CHOICE FOR PHYSICIAN
+     * @param choice
+     * @throws MyException choice > 0 && choice < size list
+     */
+
+    public static void choicePhysician(int choice) throws MyException {
+        System.out.println("Veuillez entrer votre choix : ");
+        choice = sc.nextInt();
+        if (choice <= 0 || choice > Physician.listPhysicians.size()) {
+            throw new MyException("Votre choix est invalide !");
+        } else {
+            Physician p = Physician.listPhysicians.get(choice -1);
+            System.out.println("Vous avez choisi le médecin : Dr " + p.getLastName().toUpperCase() + " "+ p.getFirstName());
+
+        }
+    }
+
+    /**
      * DISPLAY PHYSICIAN'S LIST
      * @param mutuals ArrayList
      */
@@ -173,6 +226,68 @@ public class PharmaSee {
     }
 
     /**
+     * DISPLAY PATIENT'S LASTNAME AND FIRSTNAME LIST
+     * @param patientsName ArrayList
+     */
+    public static void displayListPatientsName(ArrayList patientsName){
+
+        System.out.println("******** Affichage des noms des patients : ********");
+        for (int i = 0; i < Patient.listPatients.size(); i++) {
+
+            System.out.print((i+1) + " " + Patient.listPatients.get(i).getLastName().toUpperCase());
+            System.out.println(" " +Patient.listPatients.get(i).getFirstName());
+        }
+    }
+
+    /**
+     * USER CHOICE FOR PATIENT
+     * @param choice
+     * @throws MyException choice > 0 && choice < size list
+     */
+    public static void choicePatient(int choice) throws MyException {
+        System.out.println("Veuillez entrer votre choix : ");
+        choice = sc.nextInt();
+        if (choice <= 0 || choice > Patient.listPatients.size()) {
+            throw new MyException("Votre choix est invalide !");
+        } else {
+            Patient p = Patient.listPatients.get(choice - 1);
+            System.out.println("Vous avez choisi le patient : " + p.getLastName().toUpperCase() +" " + p.getFirstName());
+        }
+    }
+
+    /**
+     * CREATION OF A PATIENT
+     *
+     */
+    public static void createPatient() {
+        afficheMessage(" +++++++++++  Créer et ajouter un patient : ++++++++++ ",0);
+        System.out.println("Merci de saisir nom du patient. ");
+        lastName = sc.nextLine();
+        System.out.println("Le prénom du patient.");
+        firstName  = sc.nextLine();
+        System.out.println("Sa date de naissance.");
+        //LocalDate dateOfBirth = sc.nextLine();
+        System.out.println("Merci de saisir l'email du patient. ");
+        email = sc.nextLine();
+        System.out.println("Son numéro de téléphone. ");
+        phoneNumber = sc.nextLine();
+        System.out.println("Merci de saisir l'adresse avec ce format : 102 rue des malades.");
+        address = sc.nextLine();
+        System.out.println("Le code postal sous ce format : 54136. ");
+        postCode = sc.nextLine();
+        System.out.println("La ville. ");
+        city = sc.nextLine();
+        afficheMessage("Le numéro de sécurité social du patient.", 1);
+        socialSecurityNumber = sc.nextLine();
+        System.out.println("Merci d'associer un médecin à ce patient. ");
+        displayListPhysicianName(Physician.listPhysicians);
+        System.out.println("Merci d'associer une mutuelle à ce patient. ");
+
+        sc.nextLine();// vider le buffer
+
+    }
+
+    /**
      * DISPLAY DRUGS' LIST
      * @param drugs ArrayList
      */
@@ -191,24 +306,32 @@ public class PharmaSee {
      */
     public static void createPhysician() {
         afficheMessage(" +++++++++++  Créer et ajouter un médecin : ++++++++++ ",0);
+
         System.out.println("Merci de saisir nom du docteur. ");
         lastName = sc.nextLine();
+
         System.out.println("Le prénom du docteur.");
         firstName  = sc.nextLine();
+
         System.out.println("Merci de saisir l'email du docteur. ");
         email = sc.nextLine();
+
         System.out.println("Son numéro de téléphone. ");
         phoneNumber = sc.nextLine();
+
         System.out.println("Merci de saisir l'adresse avec ce format : 5 rue de la paillette.");
         address = sc.nextLine();
+
         System.out.println("Le code postal sous ce format : 54136. ");
         postCode = sc.nextLine();
+
         System.out.println("La ville. ");
         city = sc.nextLine();
+
         afficheMessage("Et enfin, le numero RPPS du docteur", 1);
         rpps = sc.nextLine();
-        sc.nextLine();// vider le buffer
 
+        sc.nextLine();// vider le buffer
     }
 
     /**
@@ -225,12 +348,34 @@ public class PharmaSee {
             displayMenu();
         } else if (choice == 'r') {
             afficheMessage("-----> Vous voici de retour à l'étape précédente : ",0);
-            // a réfléchir pour factoriser - à completer suivant l'endroit implémenter
+
         } else if (choice == 'o') {
             afficheMessage(" Très bien, poursuivons : ",1);
-            // a réfléchir pour factoriser - à completer suivant l'endroit implémenter
+            //continue;
         }
     }
+//    // test de label NON FONCTIONNEL
+//    public static void approvalTwo() throws MyException {
+//        System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o / " +
+//                "pour retourner à l'étape précédente, tapez r / " +
+//                "pour vous rendre sur le menu principal, tapez m");
+//        char choice = sc.nextLine().charAt(0);
+//
+//        stop:
+//        while (choice != 'm' && choice != 'r' && choice != 'o') {
+//            System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o / " +
+//                    "pour retourner à l'étape précédente, tapez r / " +
+//                    "pour vous rendre sur le menu principal, tapez m");
+//            if (choice == 'o') {
+//                afficheMessage(" Très bien, poursuivons : ", 1);
+//                break stop;
+//            } else {
+//                afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
+//                displayMenu();
+//            }
+//        }
+//    }
+
 
     /**
      * AFFICHAGE MESSAGE ERREUR EN ROUGE
