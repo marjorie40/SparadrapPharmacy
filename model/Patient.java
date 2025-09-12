@@ -10,9 +10,10 @@ import java.time.format.DateTimeFormatter;
 
 public class Patient extends People {
     private String socialSecurityNumber;
-    private LocalDate dateOfBirth = LocalDate.now();
+    private LocalDate dateOfBirth = LocalDate.of(1990, 1, 1);
     private Mutual mutual;
     private String referingPhysician;
+    private Physician physician;
     private String REGEX_SOCIALNUM = "^[0-9]{13}$";
     private String REGEX_IDENTITE = "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[- ][A-Za-zÀ-ÖØ-öø-ÿ]+)*$";
 
@@ -20,11 +21,11 @@ public class Patient extends People {
 
     public Patient (String lastName, String firstName, LocalDate dateOfBirth, String email,
                     String phoneNumber, String address, String postCode, String city,
-                    String socialSecurityNumber, String referingPhysician, Mutual mutual ) throws MyException {
+                    String socialSecurityNumber, Physician physician, Mutual mutual ) throws MyException {
         super(lastName, firstName, email, phoneNumber, address, postCode, city);
         this.setDateOfBirth(dateOfBirth);
         this.setSocialSecurityNumber (socialSecurityNumber);
-        this.setReferingPhysician (referingPhysician);
+        this.setPhysician (physician);
         this.setMutual(mutual);
     }
 
@@ -59,14 +60,14 @@ public class Patient extends People {
         this.mutual = mutual;
     }
 
-    public String getReferingPhysician() {
-        return this.referingPhysician;
+    public Physician getPhysician() {
+        return this.physician;
     }
-    public void setReferingPhysician(String referingPhysician) throws MyException {
-        if (referingPhysician == null || referingPhysician.isEmpty() || !referingPhysician.matches(REGEX_IDENTITE)) {
+    public void setPhysician(Physician physician) throws MyException {
+        if (physician == null ) { //|| !physician.matches(REGEX_IDENTITE)
             throw new MyException("La saisie de l'identité du médecin est invalide, veuiller réessayer. ");
         }
-        this.referingPhysician = referingPhysician;
+        this.physician = physician;
     }
 
     public static ArrayList<Patient> getListPatients() {
@@ -87,20 +88,34 @@ public class Patient extends People {
 
     public static void addPatient(Patient Patient) {
         listPatients.add(Patient);
+        System.out.println("Le nouveau patient est ajouté : " + Patient.toString());
+    }
 
-        System.out.println(" Le nouveau patient est ajouté : " + Patient.toString());
+    /**
+     * RESEARCH PATIENT BY THE LAST NAME
+     * @param getLastName
+     * @return Physician
+     */
+
+    public static Patient searchPatient(String getLastName)  {
+        for (int i = 0; i < listPatients.size(); i++) {
+            if (listPatients.get(i).getLastName().equals(getLastName.trim().toLowerCase())) {
+                return listPatients.get(i);
+            }
+        }
+        return null;
     }
 
     @Override
     public String toString() {
-        return "Patient{ "+ this.getLastName()+" " + this.getFirstName()+
+        return "Patient { "+ this.getLastName()+" " + this.getFirstName()+
                 ", adresse " + this.getAddress() + ", " + this.getPostCode() + " " + this.getCity() +
-                ", date de naissance : " + this.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+                ", date de naissance : " + this.getDateOfBirth() + //.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
                 ", Email : " + this.getEmail() +
                 ", Téléphone : " +  this.getPhoneNumber() +
                 " N° Sécurité Social = " + this.getSocialSecurityNumber() + '\'' +
-                ", Mutuelle : " + this.getMutual() +
-                ", Médecin Traitant : Dr " + this.getReferingPhysician() + '\'' +
+                ", Mutuelle : " + this.getMutual().getName() + '\'' +
+                ", Médecin Traitant : Dr " + this.getPhysician() + '\'' +
                 '}';
     }
 }

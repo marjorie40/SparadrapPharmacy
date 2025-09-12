@@ -1,24 +1,34 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Purchase {
 
-    private LocalDate dateOfPurchase =  LocalDate.now();
+    private boolean document = true;
+    private ArrayList<Prescription> prescriptionList;
+    private LocalDate purchaseDate = LocalDate.now();
     private Prescription prescription;
     private int quantity;
-    private double sum ; // = sum of drugs prices
+    private double sum; // = sum of drugs prices
     private double total = 0; // = sum - (sum * coef mutuelle)
 
-    public ArrayList<Purchase> purchaseList = new ArrayList<>();
+    public static ArrayList<Purchase> purchaseList = new ArrayList<>();
 
-    public LocalDate getDateOfPurchase() {
-        return this.dateOfPurchase;
+    public Purchase(LocalDate purchaseDate, Prescription prescription, int quantity, double sum) {
+        this.setPurchaseDate(purchaseDate);
+        this.setPrescription(prescription);
+        this.setSum(sum);
+        this.setTotal(total);
     }
 
-    public void setDateOfPurchase(LocalDate dateOfPurchase) {
-        this.dateOfPurchase = LocalDate.now();
+    public LocalDate getPurchaseDate() {
+        return this.purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 
     public Prescription getPrescription() {
@@ -53,12 +63,43 @@ public class Purchase {
         this.purchaseList = purchaseList;
     }
 
-    public Purchase(LocalDate dateOfPurchase, Prescription prescription, double sum, double total ) {
-        this.dateOfPurchase = LocalDate.now();
-        this.setPrescription (prescription);
-        this.setSum(sum);
-        this.setTotal(total);
 
+    /**
+     * ADD PURCHASE
+     * @param purchase
+     */
+    public static void addPurchase(Purchase purchase) {
+        purchaseList.add(purchase);
 
+        System.out.println(" Achat ajouté : " + purchase.toString());
     }
+
+
+    /**
+     * RESEARCH PURCHASE BY DATE
+     * @param purchaseDate,purchaseList
+     * @return purchase
+     */
+    public static Purchase searchPurchase(LocalDate purchaseDate, ArrayList<Purchase> purchaseList) {
+        for (Purchase purchase : purchaseList) {
+            if (purchaseDate.isEqual(purchase.getPurchaseDate())) {
+                return purchase;
+            }
+        }
+        return null;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Purchase {" +
+                "Date de l'achat : " + getPurchaseDate() +
+                ", ordonnance =" + getPrescription() +
+                ", date de l'ordonnance : " +getPrescription().getToday() +
+                ", quantity=" + quantity +
+                ", sum=" + getSum() +
+                ", purchaseList=" + getPurchaseList() +
+                '}';
+    }
+
 }

@@ -34,8 +34,6 @@ public class Physician extends People {
     }
 
 
-
-
     /**
      * RESEARCH PHYSICIAN BY THE LAST NAME
      * @param getLastName
@@ -61,9 +59,6 @@ public class Physician extends People {
 
         System.out.println(" Médecin ajouté : " + Physician.toString());
     }
-
-
-
 
     @Override
     public String toString() {

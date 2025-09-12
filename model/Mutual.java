@@ -105,10 +105,10 @@ public class Mutual {
     }
 
     /**
-     * DISPLAY MUTUAL *** A TESTER
-     * @throws
+     * DISPLAY MUTUAL
+     * @throws MyException
      */
-    public void displayMutual() throws MyException {
+    public static void displayMutual() throws MyException {
         if (mutualList.isEmpty()) {
             throw new MyException("La liste est vide, veuillez créer une nouvelle mutuelle. ");
         } else {
@@ -116,6 +116,17 @@ public class Mutual {
                 System.out.println(mutual.getName());
             }
         }
+    }
+
+    /**
+     * ADD MUTUAL NEED TEST IN MAIN (not mandatory)
+     * @param Mutual
+     */
+
+    public static void addMutual(Mutual Mutual) {
+        mutualList.add(Mutual);
+
+        System.out.println(" Mutuelle ajoutée : " + Mutual.toString());
     }
 
     /**
@@ -128,7 +139,7 @@ public class Mutual {
 
     @Override
     public String toString() {
-        return "Mutual{ " +
+        return "Mutual { " +
                 "name='" + getName() + '\'' +
                 ", address='" + getAddress() + '\'' +
                 ", postCode=" + getPostCode() +

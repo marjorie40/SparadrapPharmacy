@@ -7,17 +7,31 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class Prescription {
-    private LocalDate today = LocalDate.parse("Date d'émission : ", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    private int number;
+    private LocalDate today;
     private Physician physician;
     private Patient patient;
-    private ArrayList<Drug> drugs;
+    private Drug drug;
+    private ArrayList<Drug> drugForPrescription;
 
 
-    public Prescription(LocalDate today, Physician physician, Patient patient, ArrayList<Drug> drugs) {
+    public Prescription(int number, LocalDate today, Physician physician, Patient patient,
+                        Drug drug,ArrayList<Drug> drugForPrescription) {
         this.setToday(today);
         this.setPhysician(physician);
         this.setPatient(patient);
-        this.setDrugs(drugs);
+        this.setDrugForPrescription(drugForPrescription);
+    }
+
+
+    public ArrayList<Prescription> prescriptionList =  new ArrayList<Prescription> ();
+
+    public int getNumber() {
+        return this.number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public LocalDate getToday() {
@@ -44,21 +58,21 @@ public class Prescription {
         this.patient = patient;
     }
 
-    public ArrayList<Drug> getDrugs() {
-        return this.drugs;
+    public ArrayList<Drug> getDrugForPrescription() {
+        return this.drugForPrescription;
     }
 
-    public void setDrugs(ArrayList<Drug> drugs) {
-        this.drugs = drugs;
+    public void setDrugForPrescription(ArrayList<Drug> drugForPrescription) {
+        this.drugForPrescription = drugForPrescription;
     }
 
     @Override
     public String toString() {
-        return "Ordonnance { " +
-                "date d'emission : " + getToday() +
+        return "Ordonnance n° : " + getNumber() +
+                "date d'émission : " + getToday() +
                 ", médecin prescripteur : " + getPhysician() +
                 ", patient = " + getPatient() +
-                ", Médicament(s) = " + getDrugs() +
+                ", Médicament(s) = " + getDrugForPrescription() +
                 '}';
     }
 }

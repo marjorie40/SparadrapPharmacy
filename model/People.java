@@ -30,7 +30,7 @@ public class People {
 
     }
 
-    public String getLastName() {
+    public  String getLastName() {
         return this.lastName;
     }
     public void setLastName(String lastName) throws MyException{
