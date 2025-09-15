@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Drug {
-    private static String name;
+    private String name;
     private String category;
-    private static double price;
+    private double price;
     private int quantity;
     private LocalDate startDate;
 
@@ -28,17 +28,17 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
 
 }
 
-    public static String getName() {
-    return name;
-    }
+    public  String getName() {
+        return this.name;
+        }
 
     public void setName(String name) {
-    this.name = name;
-    }
+        this.name = name;
+        }
 
     public String getCategory() {
-    return this.category;
-    }
+        return this.category;
+        }
 
     public void setCategory(String category) throws MyException {
         if (category == null) {
@@ -47,8 +47,8 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
             this.category = category;
         }
     }
-    public static double getPrice() {
-        return price;
+    public double getPrice() {
+        return this.price;
     }
 
     public void setPrice(double price) throws MyException {
@@ -60,7 +60,7 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
     }
 
     public int getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public void setQuantity(int quantity) throws MyException {
@@ -82,15 +82,15 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
             this.startDate = startDate;
         }
     }
-    public ArrayList <Drug> getDrugs() {
 
-    return drugsList;
-    }
+
+    public ArrayList <Drug> getDrugs() {
+        return drugsList;
+        }
 
     public void setDrugsList(ArrayList<Drug> drugsList) {
-
-    this.drugsList = drugsList;
-    }
+        this.drugsList = drugsList;
+        }
 
     public static ArrayList<Drug> getDrugsForPrescription() {
         return drugsForPrescription;
@@ -100,6 +100,29 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
         Drug.drugsForPrescription = drugsForPrescription;
     }
 
+    /**
+     * RESEARCH DRUG BY NAME
+     * @param getName
+     * @return
+     * @throws MyException
+     */
+    public static Drug searchDrug(String getName) throws MyException {
+        if (getName == null) {
+            throw new MyException("Le nom du médicament est n'existe pas. ");
+        } else {
+            for (int i = 0; i < drugsList.size(); i++){
+                if (drugsList.get(i).getName().equals(getName.trim().toLowerCase())) ;
+                return drugsList.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * TO STRING METHODE
+     * @return
+     */
+
     @Override
     public String toString() {
         return "Médicament {" +
@@ -107,7 +130,7 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
                 ", catégorie :'" + getCategory() + '\'' +
                 ", Tarif unitaire = €" + getPrice() +
                 ", quantité =" + getQuantity() +
-                ", Date de mise en service : " + getStartDate() +
+                //", Date de mise en service : " + getStartDate() +
                 '}';
     }
 }

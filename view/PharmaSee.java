@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+import static model.Drug.drugsList;
 import static model.Mutual.mutualList;
 import static model.Physician.listPhysicians;
+import static model.Prescription.prescriptionList;
 import static model.Purchase.purchaseList;
 import static model.PurchaseHistory.purchaseHistoryList;
 import static model.Patient.listPatients;
+import model.Prescription;
 
 
 public class PharmaSee {
@@ -35,7 +38,7 @@ public class PharmaSee {
     private static String rpps;
     private static Physician physician;
     private static String socialSecurityNumber;
-    private static LocalDate dateOfBirth = LocalDate.of(1920,1,1);
+    private static LocalDate dateOfBirth = LocalDate.of(1920, 1, 1);
     private static Mutual mutual;
     private static String referingPhysician;
     private static String drugName;
@@ -48,6 +51,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE LAST NAME OF PEOPLE
+     *
      * @return lastName
      */
     public static String getLastName() {
@@ -56,6 +60,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE FIRST NAME OF PEOPLE
+     *
      * @return firstName
      */
     public static String getFirstName() {
@@ -64,6 +69,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE EMAIL OF PEOPLE
+     *
      * @return email
      */
     public static String getEmail() {
@@ -72,6 +78,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE PHONE NUMBER OF PEOPLE
+     *
      * @return phoneNumber
      */
     public static String getPhoneNumber() {
@@ -80,6 +87,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE STREET ADDRESS OF PEOPLE
+     *
      * @return address
      */
     public static String getAddress() {
@@ -88,6 +96,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE CITY ADDRESS OF PEOPLE
+     *
      * @return city
      */
     public static String getCity() {
@@ -96,6 +105,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE POST CODE ADDRESS OF PEOPLE
+     *
      * @return postCode
      */
     public static String getPostCode() {
@@ -104,6 +114,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE RPPS NUMBER (12 DIGITS) OF PHYSICIAN
+     *
      * @return rpps
      */
     public static String getRpps() {
@@ -112,6 +123,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE PHYSICIAN
+     *
      * @return physician
      */
     public static Physician getPhysician() {
@@ -120,6 +132,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE MUTUAL OF PATIENT
+     *
      * @return mutual
      */
     public static Mutual getMutual() {
@@ -128,6 +141,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE BIRTH DATE OF PATIENT
+     *
      * @return dateOfBirth
      */
     public static LocalDate getDateOfBirth() {
@@ -136,6 +150,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE SOCIAL SECURITY NUMBER OF THE PATIENT
+     *
      * @return socialSecurityNumber
      */
     public static String getSocialSecurityNumber() {
@@ -144,6 +159,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE DURG NAME
+     *
      * @return physician
      */
     public static String getDrugName() {
@@ -152,6 +168,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE DATE OF THE PURCHASE
+     *
      * @return purchaseDate
      */
     public static LocalDate getPurchaseDate() {
@@ -160,6 +177,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE PRESCRIPTION
+     *
      * @return prescription
      */
     public static Prescription getPrescription() {
@@ -168,6 +186,7 @@ public class PharmaSee {
 
     /**
      * RETURN THE PURCHASE LIST OF THE DAY
+     *
      * @return purchasesByDay
      */
     public static LocalDate getPurchasesByDay() {
@@ -176,10 +195,11 @@ public class PharmaSee {
 
     /**
      * START OF THE APP CHOICE NOT SECURE
+     *
      * @param response of the user
      * @return response
      */
-    public static String init (String response) throws MyException {
+    public static String init(String response) throws MyException {
 
         System.out.println("Souhaitez vous entrer dans le menu ? Pour entrer tapez oui, pour sortir tapez non. ");
         response = sc.nextLine();
@@ -197,6 +217,7 @@ public class PharmaSee {
 
     /**
      * DISPLAY MAIN MENU AND READ USER CHOICE
+     *
      * @return user choice
      */
     public static int displayMenu() {
@@ -222,9 +243,10 @@ public class PharmaSee {
 
     /**
      * DISPLAY PHYSICIAN'S LIST
+     *
      * @param physicians ArrayList
      */
-    public static void displayListPhysician(ArrayList physicians){
+    public static void displayListPhysician(ArrayList physicians) {
 
         System.out.println("******** Affichage des médecins : ********");
         for (int i = 0; i < listPhysicians.size(); i++) {
@@ -235,22 +257,24 @@ public class PharmaSee {
 
     /**
      * DISPLAY PHYSICIAN'S LASTNAME AND FIRSTNAME LIST
+     *
      * @param physiciansName ArrayList
      */
-    public static void displayListPhysicianName(ArrayList physiciansName){
+    public static void displayListPhysicianName(ArrayList physiciansName) {
         System.out.println("******** Affichage des noms des médecins : ********");
         for (int i = 0; i < listPhysicians.size(); i++) {
 
-            System.out.print((i+1) + " - " + "Dr " + listPhysicians.get(i).getLastName().toUpperCase());
+            System.out.print((i + 1) + " - " + "Dr " + listPhysicians.get(i).getLastName().toUpperCase());
             System.out.println(" " + listPhysicians.get(i).getLastName());
         }
     }
 
     /**
      * DISPLAY PURCHASES' LIST
+     *
      * @param purchases ArrayList
      */
-    public static void displayPurchaseList(ArrayList purchases){
+    public static void displayPurchaseList(ArrayList purchases) {
 
         System.out.println("******** Affichage des achats : ********");
         for (int i = 0; i < purchaseList.size(); i++) {
@@ -261,19 +285,21 @@ public class PharmaSee {
 
     /**
      * DISPLAY MUTUALS' NAMES LIST
+     *
      * @param mutualsName ArrayList
      */
-    public static void displayMutualListName(ArrayList mutualsName){
+    public static void displayMutualListName(ArrayList mutualsName) {
         System.out.println("******** Affichage des noms des mutuelles : ********");
         for (int i = 0; i < mutualList.size(); i++) {
 
-            System.out.println((i+1) + " - " + "Assurance Santé :  " + mutualList.get(i).getName().toUpperCase());
+            System.out.println((i + 1) + " - " + "Assurance Santé :  " + mutualList.get(i).getName().toUpperCase());
 
         }
     }
 
     /**
      * USER CHOICE FOR PHYSICIAN
+     *
      * @param choice
      * @throws MyException choice > 0 && choice < size list
      */
@@ -283,18 +309,20 @@ public class PharmaSee {
         choice = sc.nextInt();
         if (choice < 0 || choice > listPhysicians.size()) {
             throw new MyException("Votre choix est invalide !");
-        } else{
-            Physician p = listPhysicians.get(choice -1);
-            System.out.println("Vous avez choisi le médecin : Dr " + p.getLastName().toUpperCase() + " "+ p.getFirstName());
-            //System.out.println(p.toString());
-            return  p;
+        } else {
+            //approval();
+            Physician p = listPhysicians.get(choice - 1);
+            System.out.println("Vous avez choisi le médecin : Dr " + p.getLastName().toUpperCase() + " " + p.getFirstName());
+
+            afficheMessage(p.toString(),0);
+            return p;
         }
     }
 
 
-
     /**
      * USER CHOICE FOR MUTUAL
+     *
      * @param choice
      * @throws MyException choice > 0 && choice < size list
      */
@@ -305,18 +333,19 @@ public class PharmaSee {
         if (choice <= 0 || choice > mutualList.size()) {
             throw new MyException("Votre choix est invalide !");
         } else {
-            Mutual m = mutualList.get(choice -1);
-            System.out.println("Vous avez choisi la mutuelle : --> " + m.getName().toUpperCase() +
-                    " - Taux de remboursement (coefficient) : " + m.getRefundRate());
+            Mutual m = mutualList.get(choice - 1);
+            afficheMessage("Vous avez choisi la mutuelle : --> " + m.getName().toUpperCase() +
+                    " - Taux de remboursement (coefficient) : " + m.getRefundRate(),0);
 
         }
     }
 
     /**
      * DISPLAY MUTUAL'S LIST
+     *
      * @param mutuals ArrayList
      */
-    public static void displayMutualList(ArrayList mutuals){
+    public static void displayMutualList(ArrayList mutuals) {
 
         System.out.println("******** Affichage des mutuelles : ********");
         for (int i = 0; i < mutualList.size(); i++) {
@@ -327,9 +356,10 @@ public class PharmaSee {
 
     /**
      * DISPLAY PATIENT'S LIST
+     *
      * @param patients ArrayList
      */
-    public static void displayListPatients(ArrayList patients){
+    public static void displayListPatients(ArrayList patients) {
 
         System.out.println("******** Affichage des patients : ********");
         for (int i = 0; i < Patient.listPatients.size(); i++) {
@@ -340,21 +370,23 @@ public class PharmaSee {
 
     /**
      * DISPLAY PATIENT'S LASTNAME AND FIRSTNAME LIST
+     *
      * @param patientsName ArrayList
      */
-    public static void displayListPatientsName(ArrayList patientsName){
+    public static void displayListPatientsName(ArrayList patientsName) {
         System.out.println("******** Affichage des noms des patients : ********");
 
 
         for (int i = 0; i < Patient.listPatients.size(); i++) {
 
-            System.out.print((i+1) + " " + Patient.listPatients.get(i).getLastName().toUpperCase());
-            System.out.println(" " +Patient.listPatients.get(i).getFirstName());
+            System.out.print((i + 1) + " " + Patient.listPatients.get(i).getLastName().toUpperCase());
+            System.out.println(" " + Patient.listPatients.get(i).getFirstName());
         }
     }
 
     /**
      * USER CHOICE FOR PATIENT
+     *
      * @param choice
      * @throws MyException choice > 0 && choice < size list
      */
@@ -364,27 +396,28 @@ public class PharmaSee {
         if (choice <= 0 || choice > Patient.listPatients.size()) {
             throw new MyException("Votre choix est invalide !");
         } else {
+            //approval('o');
             Patient p = Patient.listPatients.get(choice - 1);
-            System.out.println("Vous avez choisi le patient : " + p.getLastName().toUpperCase() );
+            System.out.println("Vous avez choisi le patient : " + p.getLastName().toUpperCase());
 
-            System.out.println("Voici ces données complètes : " + p.toString() );
+            afficheMessage("Voici ces données complètes : " + p.toString(),0);
 
         }
     }
 
     /**
      * CREATION OF A PATIENT
-     *
+     *Display : the communication with the user to create a patient
      */
     public static void createPatient() throws MyException {
-        afficheMessage(" +++++++++++  Créer et ajouter un patient : ++++++++++ ",0);
+        afficheMessage(" +++++++++++  Créer et ajouter un patient : ++++++++++ ", 0);
 
         System.out.println("");
         System.out.println("Merci de saisir nom du patient. ");
         lastName = sc.nextLine();
 
         System.out.println("Le prénom du patient.");
-        firstName  = sc.nextLine();
+        firstName = sc.nextLine();
 
         System.out.println("Sa date de naissance (jj/mm/aaaa).");
         String d = sc.nextLine();
@@ -422,6 +455,7 @@ public class PharmaSee {
 
     /**
      * ASK FOR PURCHASE WITH PRESCRIPTION
+     *
      * @throws MyException
      */
     public static void askCreatePurchase() throws MyException {
@@ -435,7 +469,7 @@ public class PharmaSee {
         if (drugName.isEmpty()) {
             throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
         } else {
-            drugName.equalsIgnoreCase(Drug.getName().toUpperCase().toString());
+            drugName.equalsIgnoreCase(Drug.getDrugsForPrescription().toString());
         }
 
     }
@@ -443,23 +477,37 @@ public class PharmaSee {
 
     /**
      * CREATION PURCHASE
+     *
      * @throws MyException
      */
     public static void createPurchase() throws MyException {
 
         System.out.println(" ************  ACHATS  ***************** ");
 
-        System.out.println("Entrer la date");
+        System.out.println("Entrer la date au format jj/mm/aaaa");
         LocalDate puchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        System.out.println("ajouter la prescription"); // Prescription recupération du medecin et du patient et mutuelle
+        System.out.println("ajouter l'ordonnance'");// Prescription recupération du medecin et du patient et mutuelle
+
+            for (int i = 0; i < prescriptionList.size(); i++) {
+                if (prescriptionList.get(i).equals(getDrugName())) {
+                    prescriptionList.add(i, prescriptionList.get(i));
+                    System.out.println(prescriptionList.get(i));
+                }
+        }
+
+
+
 
         System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
         String drugName = sc.nextLine().toUpperCase().trim();
         if (drugName.isEmpty()) {
             throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
         } else {
-            drugName.equalsIgnoreCase(Drug.getName().toUpperCase().toString());
+            drugName.equalsIgnoreCase(getDrugName());
+            System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
+
+
 
             System.out.println("La quantité");// * le prix pour amount * coef mutuelle
 
@@ -469,6 +517,7 @@ public class PharmaSee {
 
     /**
      * CREATION DIRECT PURCHASE
+     *
      * @throws MyException
      */
     public static void createDirectPurchase() throws MyException {
@@ -485,6 +534,7 @@ public class PharmaSee {
 
     /**
      * DISPLAY HISTORY LIST OF PURCHASES
+     *
      * @throws MyException
      */
     public static void displayPurchaseHistoryList() throws MyException {
@@ -498,6 +548,7 @@ public class PharmaSee {
 
     /**
      * RESEARCH THE PURCHASE LIST OF TODAY
+     *
      * @throws MyException
      */
     public static void searchPurchaseToday() throws MyException {
@@ -507,6 +558,7 @@ public class PharmaSee {
 
     /**
      * RESEARCH THE PURCHASE LIST THROUGH ONE DATE
+     *
      * @throws MyException
      */
     public static void searchPurchaseByDate() throws MyException {
@@ -519,6 +571,7 @@ public class PharmaSee {
 
     /**
      * RESEARCH THE PURCHASE LIST THROUGH A PERIOD WITH START DATE & END DATE
+     *
      * @throws MyException
      */
     public static void searchPurchaseByPeriod() throws MyException {
@@ -548,18 +601,15 @@ public class PharmaSee {
             searchPurchaseByDate();
         } else if (reply == 3) {
             searchPurchaseByPeriod();
-        } if (reply < 0 ||  reply >= 3) {
+        }
+        if (reply < 0 || reply >= 3) {
             throw new MyException(" Veuillez choisir le type de recherche ou  retourner au menu en tapant [0-3] ");
-        }else {
-            if (reply==0);
+        } else {
+            if (reply == 0) ;
             displayMenu();
         }
 
     }
-
-
-
-
 
 
 //    /**
@@ -584,17 +634,17 @@ public class PharmaSee {
 //        }
 
 
-
     /**
      * DISPLAY DRUGS' LIST
+     *
      * @param drugs ArrayList
      */
-    public static void displayDrugsList(ArrayList drugs){
+    public static void displayDrugsList(ArrayList drugs) {
 
         System.out.println("******** Affichage des médicaments : ********");
-        for (int i = 0; i < Drug.drugsList.size(); i++) {
+        for (int i = 0; i < drugsList.size(); i++) {
 
-            System.out.println(Drug.drugsList.get(i).toString());
+            System.out.println(drugsList.get(i).toString());
         }
     }
 
@@ -603,13 +653,13 @@ public class PharmaSee {
      *
      */
     public static void createPhysician() {
-        afficheMessage(" +++++++++++  Créer et ajouter un médecin : ++++++++++ ",0);
+        afficheMessage(" +++++++++++  Créer et ajouter un médecin : ++++++++++ ", 0);
 
         System.out.println("Merci de saisir nom du docteur. ");
         lastName = sc.nextLine();
 
         System.out.println("Le prénom du docteur.");
-        firstName  = sc.nextLine();
+        firstName = sc.nextLine();
 
         System.out.println("Merci de saisir l'email du docteur. ");
         email = sc.nextLine();
@@ -634,45 +684,54 @@ public class PharmaSee {
 
     /**
      * APPROVAL, BACK OR RETURN TO THE MENU
+     *
      * @throws MyException
      */
-    public static void approval() throws MyException {
-        char choice = sc.nextLine().charAt(0);
-        while (choice != 'm' && choice != 'p' && choice != 'r')
+    public static char approval(char choice) throws MyException {
+
+        boolean error = true;
+        choice = 'o';
+        do {
             System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o / " +
                     "pour retourner à l'étape précédente, tapez r / " +
                     "pour vous rendre sur le menu principal, tapez m");
+            choice = sc.nextLine().charAt(0);
+            if (choice != 'm' && choice != 'o' && choice != 'r') {
+                System.err.println("Veuillez choisir o - r ou m");
+            } else {
+                if (choice == 'm') {
+                    afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
+                    displayMenu();
+                } else if (choice == 'r') {
+                    afficheMessage("-----> Vous voici de retour à l'étape précédente : ", 0);
 
+                } else if (choice == 'o') {
+                    afficheMessage(" Très bien, poursuivons : ", 1);
+                    //continue;
+                }
+                backLoop:
+                afficheMessage("-----> Vous voici de retour à l'étape précédente : ", 0);
+                outSideLoop:
+                afficheMessage(" Très bien, poursuivons : ", 1);
+            }
+        } while (error);
 
-        if  (choice == 'm') {
-            afficheMessage("-----> Vous voici de retour dans le menu principal : ",0);
-            displayMenu();
-        } else if (choice == 'r') {
-            afficheMessage("-----> Vous voici de retour à l'étape précédente : ",0);
-
-        } else if (choice == 'o') {
-            afficheMessage(" Très bien, poursuivons : ",1);
-            //continue;
-        }
-        backLoop: afficheMessage("-----> Vous voici de retour à l'étape précédente : ",0);
-        outSideLoop: afficheMessage(" Très bien, poursuivons : ",1);
+        return choice;
     }
 
-
-    /**
-     * AFFICHAGE MESSAGE ERREUR EN ROUGE
-     * @param message
-     * @param type
-     */
-    public static void afficheMessage(String message, int type) {
-        if  (type == 0) {
-            System.err.println(message);
-        } else {
-            System.out.println(message);
+        /**
+         * AFFICHAGE MESSAGE ERREUR EN ROUGE
+         * @param message
+         * @param type
+         */
+        public static void afficheMessage (String message,int type){
+            if (type == 0) {
+                System.err.println(message);
+            } else {
+                System.out.println(message);
+            }
         }
     }
-
-}
 
 
 

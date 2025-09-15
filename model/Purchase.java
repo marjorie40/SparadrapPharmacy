@@ -1,5 +1,7 @@
 package model;
 
+import exception.MyException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,9 +18,10 @@ public class Purchase {
 
     public static ArrayList<Purchase> purchaseList = new ArrayList<>();
 
-    public Purchase(LocalDate purchaseDate, Prescription prescription, int quantity, double sum) {
+    public Purchase(LocalDate purchaseDate, Prescription prescription, int quantity, double sum)throws MyException {
         this.setPurchaseDate(purchaseDate);
         this.setPrescription(prescription);
+        this.setQuantity(quantity);
         this.setSum(sum);
         this.setTotal(total);
     }
@@ -27,7 +30,8 @@ public class Purchase {
         return this.purchaseDate;
     }
 
-    public void setPurchaseDate(LocalDate purchaseDate) {
+    public void setPurchaseDate(LocalDate purchaseDate)  {
+
         this.purchaseDate = purchaseDate;
     }
 
@@ -35,8 +39,23 @@ public class Purchase {
         return this.prescription;
     }
 
-    public void setPrescription(Prescription prescription) {
-        this.prescription = prescription;
+    public void setPrescription(Prescription prescription) throws MyException {
+        if (prescription == null) {
+            throw new MyException("Il n'y a pas de prescription.");
+        } else {
+            this.prescription = prescription;
+        }
+    }
+
+    public int getQuantity() {
+        return this.quantity;
+    }
+    public void setQuantity(int quantity) throws MyException {
+        if (quantity < 0) {
+            throw new MyException("La quantité est négative");
+        } else {
+            this.quantity = quantity;
+        }
     }
 
     public double getSum() {
@@ -88,17 +107,22 @@ public class Purchase {
         }
         return null;
     }
+//    public static deletePurchase() {
+//
+//    }
 
 
     @Override
     public String toString() {
-        return "Purchase {" +
-                "Date de l'achat : " + getPurchaseDate() +
-                ", ordonnance =" + getPrescription() +
+        return "Purchase { Patient " + getPrescription().getPatient().getLastName().toUpperCase() +
+                " " +  getPrescription().getPatient().getFirstName().toLowerCase() +
+                " --> Date de l'achat : " + getPurchaseDate() +
+                ", ordonnance du Dr " + getPrescription().getPhysician().getLastName().toUpperCase() +
                 ", date de l'ordonnance : " +getPrescription().getToday() +
-                ", quantity=" + quantity +
+                ",--> Médicaments :  " +getPrescription().getDrugForPrescription()+
+                ", quantity=" + getQuantity () +
                 ", sum=" + getSum() +
-                ", purchaseList=" + getPurchaseList() +
+                //", purchaseList=" + getPurchaseList().get(1) +
                 '}';
     }
 

@@ -14,11 +14,12 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static model.Drug.drugsForPrescription;
+import static model.Drug.*;
 import static model.Mutual.mutualList;
 import static model.Patient.listPatients;
-import static model.Drug.drugsList;
+import static model.Patient.searchPatient;
 import static model.Physician.*;
+import static model.Prescription.prescriptionList;
 import static model.Purchase.addPurchase;
 import static model.Purchase.purchaseList;
 import static model.PurchaseHistory.purchaseHistoryList;
@@ -34,7 +35,6 @@ public class Main {
         System.out.println("!!! Hello and welcome to the Sparadrap Pharmacy Management System :)");
 
         PharmaSee.afficheMessage("***********  Bienvenue  **********", 1);
-
 
         //PharmaSee.createPurchase();
 
@@ -52,8 +52,6 @@ public class Main {
 //        System.out.println(""+newPatient.toString());
 
 
-
-
 //        PharmaSee.displayListPhysicianName(listPhysicians);
 //        PharmaSee.choicePhysician(3);
 //
@@ -62,7 +60,6 @@ public class Main {
 //        PharmaSee.choicePatient(2);
 //
         //PharmaSee.askCreatePurchase();
-
 
 
         //PharmaSee.init("oui");
@@ -75,7 +72,6 @@ public class Main {
 //        //choix du médecin
 //        //afficher en détail
 //        Physician physician = PharmaSee.choicePhysician(1);
-
 
 
 //        char approval = 'z';
@@ -108,8 +104,8 @@ public class Main {
                             // afficher la nouvelle liste OK jusque la
                             PharmaSee.displayPurchaseList(purchaseList);
                         }
-                    } while(erreur);
-                    PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.",0);
+                    } while (erreur);
+                    PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.", 0);
 
                     break;
 
@@ -131,11 +127,9 @@ public class Main {
                     } while (failure);
 
 
-
-
                 case 3://consulter les médecins
 
-                     // Afficher la liste des médecins par noms
+                    // Afficher la liste des médecins par noms
                     PharmaSee.displayListPhysicianName(listPhysicians);
                     //choix du médecin pour afficher en détail
                     PharmaSee.choicePhysician(1);
@@ -148,18 +142,18 @@ public class Main {
                     PharmaSee.choicePatient(1);
                     break;
 
-
                 case 0:
+                    PharmaSee.createPurchase();
                     PharmaSee.afficheMessage(" Merci et à bientôt ", 1);
                     end = true;
                     break;
 
-                    default:
-                        PharmaSee.afficheMessage(" Erreur de saisie ! Veuillez recommencer. ", 0);
-                        break;
+                default:
+                    PharmaSee.afficheMessage(" Erreur de saisie ! Veuillez recommencer. ", 0);
+                    break;
             }
         } while (!end);
-    } //manque un }
+        //manque un }
 
 
 //        // affichage de la liste des médicaments OK
@@ -186,81 +180,95 @@ public class Main {
 //        PharmaSee.displayMutualList(mutualList);
     }
 
-        /**
-         * LIBRARY INSIDE THE APP WITH PHYSICIANS, PATIENTS, DRUGS,PRESCRIPTIONS, MUTUALS,
-         * @throws MyException
-         */
-        public static void datasInside () throws MyException {
+    /**
+     * LIBRARY INSIDE THE APP WITH PHYSICIANS, PATIENTS, DRUGS,PRESCRIPTIONS, MUTUALS,
+     *
+     * @throws MyException
+     */
+    public static void datasInside() throws MyException {
 
-            Physician physician1 = new Physician("Whos", "John", "john@whos.dr",
-                    "0383232521", "1 allée fleurie", "54000", "Nancy", "321564587956");
-            Physician physician2 = new Physician("That", "John", "john@that.dr",
-                    "0383232521", "2 allée fleurie", "54000", "Nancy", "321564587021");
-            Physician physician3 = new Physician("Girl", "John", "john@girl.dr",
-                    "0383232521", "3 allée fleurie", "54000", "Nancy", "321564584517");
+        Physician physician0 = new Physician ("Zero","Anonyme", "physician@email.fr",
+                "0303030303", "1 rue de Rien","54000","Nancy", "000000000000");
+        Physician physician1 = new Physician("Whos", "John", "john@whos.dr",
+                "0383232521", "1 allée fleurie", "54000", "Nancy", "321564587956");
+        Physician physician2 = new Physician("That", "John", "john@that.dr",
+                "0383232521", "2 allée fleurie", "54000", "Nancy", "321564587021");
+        Physician physician3 = new Physician("Girl", "John", "john@girl.dr",
+                "0383232521", "3 allée fleurie", "54000", "Nancy", "321564584517");
 
-            Physician.listPhysicians.add(physician1);
-            Physician.listPhysicians.add(physician2);
-            Physician.listPhysicians.add(physician3);
+        Physician.listPhysicians.add(physician0);
+        Physician.listPhysicians.add(physician1);
+        Physician.listPhysicians.add(physician2);
+        Physician.listPhysicians.add(physician3);
 
+        Mutual mutual0 = new Mutual("Aucun","1 rue Rien","54000","Nancy",
+                "54","0303030303", "sample@email.fr",1);
+        Mutual mutual1 = new Mutual("Almutra", "5 promenade des canaux", "54000", "Nancy",
+                "54", "0383908200", "contact@almutra.fr", 0.3);
+        Mutual mutual2 = new Mutual("MCA-Mutuelle Complémentaire d'Alsace", "6 route de Rouffach",
+                "68027", "Colmar", "68", "0389208200", "info@mca.fr",
+                0.7);
 
-            Mutual mutual1 = new Mutual("Almutra", "5 promenade des canaux", "54000", "Nancy",
-                    "54", "0383908200", "contact@almutra.fr", 0.3);
-            Mutual mutual2 = new Mutual("MCA-Mutuelle Complémentaire d'Alsace", "6 route de Rouffach",
-                    "68027", "Colmar", "68", "0389208200", "info@mca.fr",
-                    0.7);
+        mutualList.add(mutual0);
+        mutualList.add(mutual1);
+        mutualList.add(mutual2);
 
-            mutualList.add(mutual1);
-            mutualList.add(mutual2);
+        Patient patient0 = new Patient("Client", "Anonyme", LocalDate.of(1900,1,1),
+                "mutuelle@email.fr", "030303030303","1 rue Rien","54000", "Nancy",
+                "0000000000000",physician0, mutual0);
+        Patient patient1 = new Patient("Daw", "Jack", LocalDate.of(2001, 12, 03),
+                "jo@ji.fr", "0321415212", "1 boulevard de tout", "54120",
+                "Allain", "1458596523548", physician1, mutual1);
+        Patient patient2 = new Patient("Son", "Flu", LocalDate.of(1977, 01, 19),
+                "son@gli.fr", "0356655885", "102 avenue haute", "54200", "Toul",
+                "3256987412546", physician2, mutual2);
 
-
-            Patient patient1 = new Patient("Daw", "Jack", LocalDate.of(2001, 12, 03),
-                    "jo@ji.fr", "0321415212", "1 boulevard de tout", "54120",
-                    "Allain", "1458596523548", physician1, mutual1);
-            Patient patient2 = new Patient("Son", "Flu", LocalDate.of(1977, 01, 19),
-                    "son@gli.fr", "0356655885", "102 avenue haute", "54200", "Toul",
-                    "3256987412546", physician2, mutual2);
-
-            listPatients.add(patient1);
-            listPatients.add(patient2);
-
-            Drug drug1 = new Drug("Paracétamol 500mg", "Analgésique", 7.50, 35,
-                    LocalDate.of(1963, 11, 15));
-            Drug drug2 = new Drug("Lamaline", "Analgésique", 15.90, 66,
-                    LocalDate.of(1999, 9, 20));
-            Drug drug3 = new Drug("Amoxiciline", "Antibiotique", 20.90, 12,
-                    LocalDate.of(1995, 12, 12));
-            Drug drug4 = new Drug("Bepanthen", "Dermatologie", 19.20, 30,
-                    LocalDate.of(1988, 12, 1));
-
-            drugsList.add(drug1);
-            drugsList.add(drug2);
-            drugsList.add(drug3);
-            drugsList.add(drug4);
-
-            drugsForPrescription = new ArrayList<>();
-            drugsForPrescription.add(drug3);
-            drugsForPrescription.add(drug1);
+        listPatients.add(patient0);
+        listPatients.add(patient1);
+        listPatients.add(patient2);
 
 
-            Prescription prescription1 = new Prescription(1, LocalDate.of(2025,9,5),
-                    physician1, patient1,drug1, drugsForPrescription);
-            Prescription prescription2 = new Prescription (2, LocalDate.of(2025,8,25),
-                    physician2, patient2, drug2,drugsList) ;
+        Drug drug1 = new Drug("Paracétamol 500mg", "Analgésique", 7.50, 35,
+                LocalDate.of(1963, 11, 15));
+        Drug drug2 = new Drug("Lamaline", "Analgésique", 15.90, 66,
+                LocalDate.of(1999, 9, 20));
+        Drug drug3 = new Drug("Amoxiciline", "Antibiotique", 20.90, 12,
+                LocalDate.of(1995, 12, 12));
+        Drug drug4 = new Drug("Bepanthen", "Dermatologie", 19.20, 30,
+                LocalDate.of(1988, 12, 1));
 
-            Purchase purchase1 = new Purchase(LocalDate.now(),prescription1,1,25.42);
-            Purchase purchase2 = new Purchase(LocalDate.now(),prescription2,1,45.30);
-            purchaseList = new ArrayList<>();
-            purchaseList.add(purchase1);
-            purchaseList.add(purchase2);
+        drugsList.add(drug1);
+        drugsList.add(drug2);
+        drugsList.add(drug3);
+        drugsList.add(drug4);
 
-            PurchaseHistory history = new PurchaseHistory(purchaseHistoryList);
+        drugsForPrescription = new ArrayList<>();
+        drugsForPrescription.add(drug3);
+        drugsForPrescription.add(drug1);
 
-            history.addPuchaseHistory(new Purchase(LocalDate.of(2025,9,3), prescription1,
-                    2, 24.90));
-            history.addPuchaseHistory(purchase1);
-            history.addPuchaseHistory(purchase2);
-        }
+
+        Prescription prescription1 = new Prescription(1, LocalDate.of(2025, 9, 5),
+                physician1, patient1, drug1, drugsForPrescription);
+        Prescription prescription2 = new Prescription(2, LocalDate.of(2025, 8, 25),
+                physician2, patient2, drug2, drugsList);
+        prescriptionList = new ArrayList<>();
+        prescriptionList.add(prescription1);
+        prescriptionList.add(prescription2);
+
+        Purchase purchase1 = new Purchase(LocalDate.now(), prescription1, 1, 25.42);
+        Purchase purchase2 = new Purchase(LocalDate.now(), prescription2, 1, 45.30);
+        purchaseList = new ArrayList<>();
+        purchaseList.add(purchase1);
+        purchaseList.add(purchase2);
+
+        PurchaseHistory history = new PurchaseHistory(purchaseHistoryList);
+
+        history.addPuchaseHistory(new Purchase(LocalDate.of(2025, 9, 3), prescription1,
+                2, 24.90));
+        history.addPuchaseHistory(purchase1);
+        history.addPuchaseHistory(purchase2);
+    }
+}
 
 
 //

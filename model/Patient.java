@@ -85,7 +85,6 @@ public class Patient extends People {
      * ADD PATIENT , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
      * @param Patient
      */
-
     public static void addPatient(Patient Patient) {
         listPatients.add(Patient);
         System.out.println("Le nouveau patient est ajouté : " + Patient.toString());
@@ -96,7 +95,6 @@ public class Patient extends People {
      * @param getLastName
      * @return Physician
      */
-
     public static Patient searchPatient(String getLastName)  {
         for (int i = 0; i < listPatients.size(); i++) {
             if (listPatients.get(i).getLastName().equals(getLastName.trim().toLowerCase())) {

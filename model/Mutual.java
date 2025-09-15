@@ -122,7 +122,6 @@ public class Mutual {
      * ADD MUTUAL NEED TEST IN MAIN (not mandatory)
      * @param Mutual
      */
-
     public static void addMutual(Mutual Mutual) {
         mutualList.add(Mutual);
 

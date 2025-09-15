@@ -1,9 +1,8 @@
 package model;
 
+import exception.MyException;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class Prescription {
@@ -24,7 +23,7 @@ public class Prescription {
     }
 
 
-    public ArrayList<Prescription> prescriptionList =  new ArrayList<Prescription> ();
+    public static ArrayList<Prescription> prescriptionList =  new ArrayList<Prescription> ();
 
     public int getNumber() {
         return this.number;
@@ -66,12 +65,43 @@ public class Prescription {
         this.drugForPrescription = drugForPrescription;
     }
 
+    /**
+     * RESEARCH PRESCRIPTION BY PATIENT // not ops
+     *
+     * @throws MyException
+     */
+    public static void searchPrescriptionByPatient(Patient patient) throws MyException {
+        if (patient.getLastName().isEmpty() ) {
+            throw new MyException("L'ordonnance pour ce patient n'existe pas");
+        } else {
+            for (int i =0 ; i<prescriptionList.size(); i++ ) {
+                if (prescriptionList.get(i).getPatient().getLastName().equalsIgnoreCase(patient.getLastName())) {
+                    System.out.println(prescriptionList.get(i).getPatient().getLastName());
+                }
+            }
+        }
+    }
+
+    /**
+     * ADD PRESCRIPTION
+     * @param prescription
+     * @throws MyException
+     */
+    public static void addPrescription(Prescription prescription) throws MyException {
+        if (prescription == null) {
+            throw new MyException("L'ordonnance n'existe pas");
+        } else {
+            prescriptionList.add(prescription);
+            System.out.println("Ordonnance ajoutée : " + prescription.toString());
+        }
+    }
+
     @Override
     public String toString() {
-        return "Ordonnance n° : " + getNumber() +
-                "date d'émission : " + getToday() +
-                ", médecin prescripteur : " + getPhysician() +
-                ", patient = " + getPatient() +
+        return " n° : " + getNumber() +
+                " date d'émission : " + getToday() +
+                ", médecin prescripteur : " + getPhysician().getLastName().toUpperCase() + "-" +getPhysician().getFirstName().toLowerCase() +
+                ", patient = " + getPatient().getLastName().toUpperCase() + " - " + getPatient().getFirstName().toLowerCase() +
                 ", Médicament(s) = " + getDrugForPrescription() +
                 '}';
     }
