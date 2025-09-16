@@ -34,22 +34,14 @@ public class Main {
         datasInside();
         System.out.println("!!! Hello and welcome to the Sparadrap Pharmacy Management System :)");
 
-        PharmaSee.afficheMessage("***********  Bienvenue  **********", 1);
+        PharmaSee.afficheMessage("          ***********  Bienvenue  **********", 1);
+
+        //PharmaSee.approval('o');
 
         //PharmaSee.createPurchase();
 
         //Mutual.displayMutual();
 
-
-//        PharmaSee.createPatient(); // ops besoin try catch
-//        Patient newPatient = new Patient (PharmaSee.getLastName(),PharmaSee.getFirstName(),
-//                PharmaSee.getDateOfBirth(),PharmaSee.getEmail(), // date de naissance voir Patient vs PharmaSee createPatient
-//                PharmaSee.getPhoneNumber(),PharmaSee.getAddress(),
-//                PharmaSee.getPostCode(),PharmaSee.getCity(),
-//                PharmaSee.getSocialSecurityNumber(),
-//                Physician.getPhysicians().getLast(), mutualList.getLast());
-//        Patient.listPatients.add(newPatient);
-//        System.out.println(""+newPatient.toString());
 
 
 //        PharmaSee.displayListPhysicianName(listPhysicians);
@@ -62,7 +54,7 @@ public class Main {
         //PharmaSee.askCreatePurchase();
 
 
-        //PharmaSee.init("oui");
+
 
         //PharmaSee.processPurchase();
 
@@ -80,12 +72,18 @@ public class Main {
 //                System.out.println(" Voici les détails concernant ce médecin : ");
 //        }
 
+//        // STEP 1 - Entrer dans le programme ou le quitter
+//        PharmaSee.init("oui");
+
         /**
-         * MAIN MENU MANAGE BY SWITCH, BOOLEAN
+         * MAIN MENU MANAGE BY SWITCH, BOOLEAN - STEP 2
          * @throws Exception
          */
 
         boolean end = false;
+
+            menu:
+
         do {
             int userChoice = PharmaSee.displayMenu();
             switch (userChoice) {
@@ -99,7 +97,7 @@ public class Main {
                                     1, 0.00);
                             purchaseList.add(thePurchase);
                         } catch (Exception e) {
-                            PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 1);
+                            PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 0);
                         } finally {
                             // afficher la nouvelle liste OK jusque la
                             PharmaSee.displayPurchaseList(purchaseList);
@@ -108,8 +106,6 @@ public class Main {
                     PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.", 0);
 
                     break;
-
-
                 case 2://historique d'achat
                     //Afficher l'historique d'achat
                     PharmaSee.displayPurchaseHistoryList();
@@ -128,22 +124,76 @@ public class Main {
 
 
                 case 3://consulter les médecins
+                    boolean fail = false;
 
-                    // Afficher la liste des médecins par noms
-                    PharmaSee.displayListPhysicianName(listPhysicians);
-                    //choix du médecin pour afficher en détail
-                    PharmaSee.choicePhysician(1);
+                    do {
+                        // Afficher la liste des médecins par noms
+                        PharmaSee.displayListPhysicianName(listPhysicians);
+                        //choix du médecin pour afficher en détail
+                        PharmaSee.choicePhysician(1);
+                        PharmaSee.endProgram();
+
+                    } while(fail);
                     break;
 
-                case 4: //consulter les patients
-                    //Afficher la liste des patient (clients)
-                    PharmaSee.displayListPatientsName(listPatients);
-                    //choix du patient pour afficher en détail
-                    PharmaSee.choicePatient(1);
-                    break;
 
-                case 0:
-                    PharmaSee.createPurchase();
+                case 4: // page patient (client)
+                    boolean pb = true;
+
+                    int choice = PharmaSee.displayPatientPage(); ;
+
+                    if (choice ==4) {
+                        PharmaSee.createPatient();
+
+                            try {
+                                Patient newPatient = new Patient(PharmaSee.getLastName(), PharmaSee.getFirstName(),
+                                        PharmaSee.getDateOfBirth(), PharmaSee.getEmail(), // date de naissance voir Patient vs PharmaSee createPatient
+                                        PharmaSee.getPhoneNumber(), PharmaSee.getAddress(),
+                                        PharmaSee.getPostCode(), PharmaSee.getCity(),
+                                        PharmaSee.getSocialSecurityNumber(),
+                                        Physician.getPhysicians().getLast(), mutualList.getLast());
+                                System.out.println(" Nouveau " + newPatient.toString());
+
+                                Patient.listPatients.add(newPatient);
+                                pb = false;
+                            } catch (Exception e) {
+                                PharmaSee.afficheMessage("Une ERREUR est survenue !! " + e.getMessage(), 1);
+                            }
+
+                        PharmaSee.afficheMessage("Votre NOUVEAU PATIENT a bien été créé",0);
+                                break;
+
+                            } else if  (choice==1) {
+                        //consulter les patients
+                        boolean mistake = false;
+                        do {
+                            //Afficher la liste des patients (clients)
+                            PharmaSee.displayListPatientsName(listPatients);
+                            //choix du patient pour afficher en détail
+                            PharmaSee.choicePatient(1);
+                            PharmaSee.endProgram();
+
+                        } while (mistake);
+                        break;
+
+                            } else if  (choice==2) {
+                        Patient.searchPatient("Whos");
+                        //modifier données patient
+                            } else if (choice==3) {
+                    //supprimer les données du patient
+                        do {
+                            Patient.searchPatient("Client");  //combo display et choice pour select patient a suppr
+                            Patient.removePatient(Patient.getListPatients().get(0));
+                        } while (Patient.searchPatient("Client") == null);
+                            } else {
+                                if (choice==0);
+                                System.out.println("Vous allez retourner au menu");
+                                break menu;
+
+                }
+
+
+                case 0: //quitter le programme
                     PharmaSee.afficheMessage(" Merci et à bientôt ", 1);
                     end = true;
                     break;
@@ -151,9 +201,9 @@ public class Main {
                 default:
                     PharmaSee.afficheMessage(" Erreur de saisie ! Veuillez recommencer. ", 0);
                     break;
-            }
-        } while (!end);
-        //manque un }
+                }
+            } while (!end);
+        // manque 1 }
 
 
 //        // affichage de la liste des médicaments OK
@@ -191,9 +241,9 @@ public class Main {
                 "0303030303", "1 rue de Rien","54000","Nancy", "000000000000");
         Physician physician1 = new Physician("Whos", "John", "john@whos.dr",
                 "0383232521", "1 allée fleurie", "54000", "Nancy", "321564587956");
-        Physician physician2 = new Physician("That", "John", "john@that.dr",
+        Physician physician2 = new Physician("That", "Hanna", "hanna@that.dr",
                 "0383232521", "2 allée fleurie", "54000", "Nancy", "321564587021");
-        Physician physician3 = new Physician("Girl", "John", "john@girl.dr",
+        Physician physician3 = new Physician("Girl", "Meg", "meg@girl.dr",
                 "0383232521", "3 allée fleurie", "54000", "Nancy", "321564584517");
 
         Physician.listPhysicians.add(physician0);
@@ -219,7 +269,7 @@ public class Main {
         Patient patient1 = new Patient("Daw", "Jack", LocalDate.of(2001, 12, 03),
                 "jo@ji.fr", "0321415212", "1 boulevard de tout", "54120",
                 "Allain", "1458596523548", physician1, mutual1);
-        Patient patient2 = new Patient("Son", "Flu", LocalDate.of(1977, 01, 19),
+        Patient patient2 = new Patient("Son", "Philippe", LocalDate.of(1977, 01, 19),
                 "son@gli.fr", "0356655885", "102 avenue haute", "54200", "Toul",
                 "3256987412546", physician2, mutual2);
 
@@ -263,10 +313,14 @@ public class Main {
 
         PurchaseHistory history = new PurchaseHistory(purchaseHistoryList);
 
-        history.addPuchaseHistory(new Purchase(LocalDate.of(2025, 9, 3), prescription1,
+        history.addPurchaseHistory(new Purchase(LocalDate.of(2025, 9, 3), prescription1,
                 2, 24.90));
-        history.addPuchaseHistory(purchase1);
-        history.addPuchaseHistory(purchase2);
+        history.addPurchaseHistory(new Purchase(LocalDate.of(2024,2,19),
+                prescription2,1,45.52));
+        history.addPurchaseHistory(new Purchase(LocalDate.of(2024,12,25),prescription2,
+                4,85.22));
+//        history.addPurchaseHistory(purchase1);
+//        history.addPurchaseHistory(purchase2);
     }
 }
 

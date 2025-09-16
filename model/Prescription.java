@@ -70,16 +70,19 @@ public class Prescription {
      *
      * @throws MyException
      */
-    public static void searchPrescriptionByPatient(Patient patient) throws MyException {
-        if (patient.getLastName().isEmpty() ) {
+
+
+    public static Prescription searchPrescriptionByPatient(String getLastName) throws MyException {
+        if (getLastName.isEmpty() ) {
             throw new MyException("L'ordonnance pour ce patient n'existe pas");
         } else {
             for (int i =0 ; i<prescriptionList.size(); i++ ) {
-                if (prescriptionList.get(i).getPatient().getLastName().equalsIgnoreCase(patient.getLastName())) {
+                if (prescriptionList.get(i).getPatient().getLastName().equalsIgnoreCase(getLastName)) {
                     System.out.println(prescriptionList.get(i).getPatient().getLastName());
                 }
             }
         }
+        return prescriptionList.get(prescriptionList.size()-1);
     }
 
     /**

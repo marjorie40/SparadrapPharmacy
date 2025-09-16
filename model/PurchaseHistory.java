@@ -45,29 +45,29 @@ public class PurchaseHistory {
      * ADD A PURCHASE IN THE PURCHASE HISTORY LIST
      * @param purchase
      */
-    public void addPuchaseHistory(Purchase purchase) {
+    public void addPurchaseHistory(Purchase purchase) {
         this.purchaseHistoryList.add(purchase);
     }
 
     /**
      * COLLECT AND DISPLAY THE LIST OF PURCHASES FOR ONE DAY
      * @param oneDay
-     * @return puchaseByDay
+     * @return purchaseByDay
      */
     public static ArrayList<Purchase> getPurchasesByDay(LocalDate oneDay) {
-        ArrayList<Purchase> puchaseByDay = new ArrayList<>();
+        ArrayList<Purchase> purchaseByDay = new ArrayList<>();
         for (Purchase purchase : purchaseHistoryList) {
             if ((purchase.getPurchaseDate().equals(oneDay))) {
-                puchaseByDay.add(purchase);
+                purchaseByDay.add(purchase);
             }
         }
-        return puchaseByDay;
+        return purchaseByDay;
     }
 
     /**
      * COLLECT AND DISPLAY THE LIST OF TODAY'S PURCHASES
      * @param today
-     * @return getPuchasesByDay for today
+     * @return getPurchasesByDay for today
      */
     public ArrayList<Purchase> getPurchasesToday(LocalDate today) {
         return getPurchasesByDay(LocalDate.now());
@@ -80,13 +80,13 @@ public class PurchaseHistory {
      * @return purchaseByPeriod
      */
     public static ArrayList<Purchase> getPurchasesByPeriod(LocalDate startDate,  LocalDate endDate) {
-        ArrayList<Purchase> puchaseByPeriod = new ArrayList<>();
+        ArrayList<Purchase> purchaseByPeriod = new ArrayList<>();
         for (Purchase purchase : purchaseHistoryList) {
             if ((purchase.getPurchaseDate().isAfter(startDate) && purchase.getPurchaseDate().isBefore(endDate))) {
-                puchaseByPeriod.add(purchase);
+                purchaseByPeriod.add(purchase);
             }
         }
-        return puchaseByPeriod;
+        return purchaseByPeriod;
     }
 
 

@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Patient extends People {
     private String socialSecurityNumber;
-    private LocalDate dateOfBirth = LocalDate.of(1990, 1, 1);
+    private LocalDate dateOfBirth;
     private Mutual mutual;
     private String referingPhysician;
     private Physician physician;
@@ -102,6 +102,10 @@ public class Patient extends People {
             }
         }
         return null;
+    }
+
+    public static void removePatient(Patient Patient) {
+        listPatients.remove(Patient);
     }
 
     @Override
