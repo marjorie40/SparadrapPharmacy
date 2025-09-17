@@ -3,17 +3,15 @@ package model;
 import exception.MyException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 
 public class Patient extends People {
     private String socialSecurityNumber;
     private LocalDate dateOfBirth;
     private Mutual mutual;
-    private String referingPhysician;
     private Physician physician;
+    private Prescription prescription;
     private String REGEX_SOCIALNUM = "^[0-9]{13}$";
     private String REGEX_IDENTITE = "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[- ][A-Za-zÀ-ÖØ-öø-ÿ]+)*$";
 
@@ -29,9 +27,19 @@ public class Patient extends People {
         this.setMutual(mutual);
     }
 
+    /**
+     * RETURN THE SOCIAL SECURITY NUMBER
+     * @return
+     */
     public String getSocialSecurityNumber() {
         return this.socialSecurityNumber;
     }
+
+    /**
+     *
+     * @param socialSecurityNumber
+     * @throws MyException
+     */
     public void setSocialSecurityNumber(String socialSecurityNumber) throws MyException {
         if (socialSecurityNumber == null || socialSecurityNumber.isEmpty()
                 || !socialSecurityNumber.matches(REGEX_SOCIALNUM)) {
@@ -69,6 +77,15 @@ public class Patient extends People {
         }
         this.physician = physician;
     }
+
+    public Prescription getPrescription() {
+        return this.prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+            this.prescription = prescription;
+        }
+
 
     public static ArrayList<Patient> getListPatients() {
         return listPatients;
@@ -112,7 +129,7 @@ public class Patient extends People {
     public String toString() {
         return "Patient { "+ this.getLastName()+" " + this.getFirstName()+
                 ", adresse " + this.getAddress() + ", " + this.getPostCode() + " " + this.getCity() +
-                ", date de naissance : " + this.getDateOfBirth() + //.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+                ", date de naissance : " + this.getDateOfBirth() +
                 ", Email : " + this.getEmail() +
                 ", Téléphone : " +  this.getPhoneNumber() +
                 " N° Sécurité Social = " + this.getSocialSecurityNumber() + '\'' +

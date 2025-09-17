@@ -14,6 +14,7 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static model.DirectPurchase.directPurchaseList;
 import static model.Drug.*;
 import static model.Mutual.mutualList;
 import static model.Patient.listPatients;
@@ -35,6 +36,12 @@ public class Main {
         System.out.println("!!! Hello and welcome to the Sparadrap Pharmacy Management System :)");
 
         PharmaSee.afficheMessage("          ***********  Bienvenue  **********", 1);
+
+
+
+
+
+
 
         //PharmaSee.approval('o');
 
@@ -72,6 +79,12 @@ public class Main {
 //                System.out.println(" Voici les détails concernant ce médecin : ");
 //        }
 
+            Drug drug5 = new Drug("Doliprane 500mg", "Analgésique", 7.50, 35,
+                    LocalDate.of(1963, 11, 15));
+//
+//        PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.of(2025,9,9,12,10),
+//                drug5, 2, 20.3 ));
+
 //        // STEP 1 - Entrer dans le programme ou le quitter
 //        PharmaSee.init("oui");
 
@@ -88,24 +101,54 @@ public class Main {
             int userChoice = PharmaSee.displayMenu();
             switch (userChoice) {
                 case 1: //achat
-                    boolean erreur = true;
-                    do {
-                        PharmaSee.createPurchase();
 
-                        try {
-                            Purchase thePurchase = new Purchase(PharmaSee.getPurchaseDate(), PharmaSee.getPrescription(),
-                                    1, 0.00);
-                            purchaseList.add(thePurchase);
-                        } catch (Exception e) {
-                            PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 0);
-                        } finally {
-                            // afficher la nouvelle liste OK jusque la
-                            PharmaSee.displayPurchaseList(purchaseList);
+                    PharmaSee.displaySelectPurchase("OUI");
+                    PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.now(),drug5, 5, 12.1));
+                    boolean again= true;
+
+                    try {
+                        DirectPurchase directPurchase1 = new DirectPurchase(PharmaSee.getDateOfPurchase(),PharmaSee.getDrugName(),
+                                PharmaSee.getQuantity(), PharmaSee.getPrice());
+                        System.out.println(directPurchase1.toString());
+                        DirectPurchase.addDirectPurchase(directPurchase1);
+
+                        System.out.println("Pour ajouter un achat tapez 1, pour valider et finaliser la vente tapez 2, pour annuler et retourner au menu principal tapez 0");
+                        int reply = sc.nextInt();
+                        if (reply == 1) {
+                            PharmaSee.createDirectPurchase(directPurchase1);
+                        } else if (reply == 0) {
+                            //userChoice = PharmaSee.displayMenu();
+                            continue menu;
+                        } else {
+                            if (reply == 2) {
+                                // DirectPurchase.addDirectPurchase(directPurchase1);
+                                System.out.println("Votre achat a été enregistré. ");
+                                System.exit(0);
+                            }
                         }
-                    } while (erreur);
-                    PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.", 0);
+                    } catch (MyException e) {
+                        System.out.println(e.getMessage());
+                    }
 
-                    break;
+//                    V1 pas OPS
+//                    boolean erreur = true;
+//                    do {
+//                        PharmaSee.createPurchase();
+//
+//                        try {
+//                            Purchase thePurchase = new Purchase(PharmaSee.getPurchaseDate(), PharmaSee.getPrescription(),
+//                                    1, 0.00);
+//                            purchaseList.add(thePurchase);
+//                        } catch (Exception e) {
+//                            PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 0);
+//                        } finally {
+//                            // afficher la nouvelle liste OK jusque la
+//                            PharmaSee.displayPurchaseList(purchaseList);
+//                        }
+//                    } while (erreur);
+//                    PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.", 0);
+//
+//                    break;
                 case 2://historique d'achat
                     //Afficher l'historique d'achat
                     PharmaSee.displayPurchaseHistoryList();
@@ -321,6 +364,10 @@ public class Main {
                 4,85.22));
 //        history.addPurchaseHistory(purchase1);
 //        history.addPurchaseHistory(purchase2);
+
+//        DirectPurchase directPurchaseNew= new DirectPurchase(LocalDateTime.now(),
+//                "amoxiciline", 2, 12.20);
+//        directPurchaseList.add(directPurchaseNew);
     }
 }
 

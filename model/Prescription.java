@@ -70,8 +70,6 @@ public class Prescription {
      *
      * @throws MyException
      */
-
-
     public static Prescription searchPrescriptionByPatient(String getLastName) throws MyException {
         if (getLastName.isEmpty() ) {
             throw new MyException("L'ordonnance pour ce patient n'existe pas");

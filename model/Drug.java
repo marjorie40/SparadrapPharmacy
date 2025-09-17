@@ -28,7 +28,7 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
 
 }
 
-    public  String getName() {
+    public String getName() {
         return this.name;
         }
 

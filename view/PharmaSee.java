@@ -4,6 +4,7 @@ import exception.MyException;
 import model.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -41,8 +42,12 @@ public class PharmaSee {
     private static LocalDate dateOfBirth;
     private static Mutual mutual;
     private static String referingPhysician;
-    private static String drugName;
+    private static Drug drugName;
+    private static String drug ;
     private static LocalDate purchaseDate;
+    private static LocalDateTime dateOfPurchase;
+    private static double price;
+    private static int quantity;
     private static Prescription prescription;
     private static PurchaseHistory purchaseHistory;
     private static LocalDate purchasesByDay;
@@ -160,10 +165,14 @@ public class PharmaSee {
     /**
      * RETURN THE DURG NAME
      *
-     * @return physician
+     * @return drugName
      */
-    public static String getDrugName() {
+    public static Drug getDrugName() {
         return drugName;
+    }
+
+    public static String getDrug(String drug) {
+        return drug;
     }
 
     /**
@@ -173,6 +182,30 @@ public class PharmaSee {
      */
     public static LocalDate getPurchaseDate() {
         return purchaseDate;
+    }
+
+    /**
+     * RETURN THE QUANTITY FOR PURCHASES
+     * @return
+     */
+    public static int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * RETURN THE PRICE OF THE PURCHASE
+     * @return
+     */
+    public static double  getPrice() {
+        return price;
+    }
+
+    /**
+     * RETURN THE DATE AND TIME (HOUR-MINUTES) OF THE PURCHASE
+     * @return
+     */
+    public static LocalDateTime getDateOfPurchase() {
+        return dateOfPurchase;
     }
 
     /**
@@ -500,146 +533,189 @@ public class PharmaSee {
 //    }
 
 
+//    /**
+//     * CREATION PURCHASE
+//     *
+//     * @throws MyException
+//     */
+//    public static void createPurchase() throws MyException {
+//
+//        System.out.println(" ************  ACHATS  ***************** ");
+//
+//        System.out.println("Entrer la date au format jj/mm/aaaa");
+//        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//
+//        System.out.println("Ajouter l'ordonnance");// Prescription recupération du medecin et du patient et mutuelle
+//        System.out.println("Entrez le numéro de l'ordonnance.");
+//        System.out.println(prescriptionList);
+//        int selection = sc.nextInt();
+//        if (selection< 0 || selection>prescriptionList.size()) {
+//            throw new MyException("La saisie est invalide.");
+//        } else {
+//            System.out.println(""+ prescriptionList.getLast());
+//
+//        }
+//        Prescription.searchPrescriptionByPatient("Client");
+//
+//        System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
+//        drugName = sc.nextLine().toUpperCase().trim();
+//        if (drugName.isEmpty()) {
+//            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
+//        } else {
+//            if (drugName.equalsIgnoreCase(getDrugName()));
+//            System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
+//
+//
+//
+//            System.out.println("La quantité");// * le prix pour amount * coef mutuelle
+//
+//            System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
+//        }
+//    }
+
+//    /**
+//     * CREATION DIRECT PURCHASE
+//     *
+//     * @throws MyException
+//     */
+//    public static void createDirectPurchaseBis() throws MyException {
+//        System.out.println("************  ACHATS  *****************");
+//        //System.out.println("Entrer la date");
+//        //purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//        System.out.println("La date de l'achat : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+//
+//        System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
+//
+//        System.out.println("La quantité"); // * le prix pour amount * coef mutuelle
+//        System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
+//
+//    }
+
+
     /**
-     * CREATION PURCHASE
-     *
-     * @throws MyException
+     * USER SELECT THE PURCHASE TYPE : IF PRESCRIPTION --> PRESCRIPTION PURCHASE / IF NO --> DIRECT PURCHASE
+     * @param userChoice
+     * @return userChoice
+     * @throws MyException mandatory 3 choices : oui or non or menu
      */
-    public static void createPurchase() throws MyException {
+    public static String displaySelectPurchase (String userChoice) throws MyException {
 
-        System.out.println(" ************  ACHATS  ***************** ");
+        System.out.println ("Sagit-il d'un achat avec ordonnance, pour répondre : tapez OUI ou NON. " +
+                "Sinon, tapez MENU pour retourner au menu principal. ");
+        userChoice = sc.nextLine().trim().toLowerCase();
 
-        System.out.println("Entrer la date au format jj/mm/aaaa");
-        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        System.out.println("Ajouter l'ordonnance");// Prescription recupération du medecin et du patient et mutuelle
-        System.out.println("Entrez le numéro de l'ordonnance.");
-        System.out.println(prescriptionList);
-        int selection = sc.nextInt();
-        if (selection< 0 || selection>prescriptionList.size()) {
-            throw new MyException("La saisie est invalide.");
+        if ( !userChoice.equalsIgnoreCase("OUI") && !userChoice.equalsIgnoreCase("NON") && !userChoice.equalsIgnoreCase("MENU")) {
+            throw new MyException("Saisie incorrecte, veuillez taper oui ou non pour chaoisir votre type d'achat, Merci !");
         } else {
-            System.out.println(""+ prescriptionList.getLast());
-
-        }
-        Prescription.searchPrescriptionByPatient("Client");
-
-        System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
-        drugName = sc.nextLine().toUpperCase().trim();
-        if (drugName.isEmpty()) {
-            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
-        } else {
-            if (drugName.equalsIgnoreCase(getDrugName()));
-            System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
-
-
-
-            System.out.println("La quantité");// * le prix pour amount * coef mutuelle
-
-            System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
+            return userChoice;
         }
     }
 
-    /**
-     * CREATION DIRECT PURCHASE
-     *
-     * @throws MyException
-     */
-    public static void createDirectPurchase() throws MyException {
-        System.out.println("************  ACHATS  *****************");
-        System.out.println("Entrer la date");
-        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    public static void createDirectPurchase (DirectPurchase directPurchase) throws MyException {  // achat besoin de LocalDate.now(); Nom; Quantite; prix unitaire  + Patient (getprescription / getphysician / get drug / getmutuelle)
 
-        System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
+        double total = 0.0;
+        System.out.println("************  ACHATS DIRECTS *****************");
 
-        System.out.println("La quantité"); // * le prix pour amount * coef mutuelle
-        System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
+        System.out.println("La date de l'achat : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        LocalDateTime dateOfPurchase = LocalDateTime.now();
 
-    }
+        System.out.println(drugsList);
+        System.out.println("Merci d'entrer le nom du médicament");
+        Drug.searchDrug(sc.nextLine());
 
-    /**
-     * DISPLAY HISTORY LIST OF PURCHASES
-     *
-     * @throws MyException
-     */
-    public static void displayPurchaseHistoryList() throws MyException {
+        System.out.println("Merci d'entrer la quantité achetée ");
+        int quantity = sc.nextInt();
 
-        System.out.println("************  HISTORIQUE DES ACHATS  *****************");
-        for (int i = 0; i < PurchaseHistory.purchaseHistoryList.size(); i++) {
+        System.out.println("Merci d'entrer son prix unitaire");
+        double price = sc.nextDouble();
 
-            System.out.println(PurchaseHistory.purchaseHistoryList.get(i).toString());
-        }
-    }
-
-    /**
-     * RESEARCH THE PURCHASE LIST OF TODAY
-     *
-     * @throws MyException
-     */
-    public static void searchPurchaseToday() throws MyException {
-        System.out.println("--> Rechercher les achats du jour <-- ");
-        System.out.println(PurchaseHistory.getPurchasesByDay(LocalDate.now()));
-    }
-
-    /**
-     * RESEARCH THE PURCHASE LIST THROUGH ONE DATE
-     *
-     * @throws MyException
-     */
-    public static void searchPurchaseByDate() throws MyException {
-        System.out.println("--> Rechercher les achats d'une journée <-- ");
-
-        System.out.println("Entrer la date souhaitée (jj/MM/yyyy). ");
-        LocalDate oneDay = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        System.out.println(PurchaseHistory.getPurchasesByDay(oneDay));
-    }
-
-    /**
-     * RESEARCH THE PURCHASE LIST THROUGH A PERIOD WITH START DATE & END DATE
-     *
-     * @throws MyException
-     */
-    public static void searchPurchaseByPeriod() throws MyException {
-        System.out.println("--> Rechercher les achats sur une période <-- ");
-
-        System.out.println("Entrer la date de début (jj/MM/yyyy). ");
-        LocalDate startDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        System.out.println("Entrer la date de fin (jj/MM/yyyy). ");
-        LocalDate endDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        System.out.println(PurchaseHistory.getPurchasesByPeriod(startDate, endDate));
+        System.out.println("Voici le total des achats : " + drug + " " + (total = price * quantity) + " euros");
 
     }
 
-    /**
-     * HISTORY OF PURCHASE RESEARCH BY DATE OR PERIOD
-     * @throws MyException
-     */
-    public static void askResearchHistoryPurchase() throws MyException {
+        /**
+         * DISPLAY HISTORY LIST OF PURCHASES
+         *
+         * @throws MyException
+         */
+        public static void displayPurchaseHistoryList () throws MyException {
 
-        System.out.println(" En quoi puis-je vous aider ? ");
-        System.out.println("1 -- Vous souhaitez afficher les achats de la journée ? Tapez 1 ");
-        System.out.println("2 -- Vous souhaitez afficher les achats pour une date donnée ? Tapez 2 ");
-        System.out.println("3 -- Vous souhaitez afficher les achats pour une période donnée ? Tapez 3 ");
-        System.out.println("0 -- Si vous souhaitez revenir au menu principal : Tapez 0 ");
-        int reply = sc.nextInt();
+            System.out.println("************  HISTORIQUE DES ACHATS  *****************");
+            for (int i = 0; i < PurchaseHistory.purchaseHistoryList.size(); i++) {
 
-        if (reply == 1) {
-            searchPurchaseToday();
-        } else if (reply == 2) {
-            searchPurchaseByDate();
-        } else if (reply == 3) {
-            searchPurchaseByPeriod();
-        }
-        if (reply < 0 || reply >= 3) {
-            throw new MyException(" Veuillez choisir le type de recherche ou  retourner au menu en tapant [0-3] ");
-        } else {
-            if (reply == 0) ;
-            displayMenu();
+                System.out.println(PurchaseHistory.purchaseHistoryList.get(i).toString());
+            }
         }
 
-    }
+        /**
+         * RESEARCH THE PURCHASE LIST OF TODAY
+         *
+         * @throws MyException
+         */
+        public static void searchPurchaseToday () throws MyException {
+            System.out.println("--> Rechercher les achats du jour <-- ");
+            System.out.println(PurchaseHistory.getPurchasesByDay(LocalDate.now()));
+        }
+
+        /**
+         * RESEARCH THE PURCHASE LIST THROUGH ONE DATE
+         *
+         * @throws MyException
+         */
+        public static void searchPurchaseByDate () throws MyException {
+            System.out.println("--> Rechercher les achats d'une journée <-- ");
+
+            System.out.println("Entrer la date souhaitée (jj/MM/yyyy). ");
+            LocalDate oneDay = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            System.out.println(PurchaseHistory.getPurchasesByDay(oneDay));
+        }
+
+        /**
+         * RESEARCH THE PURCHASE LIST THROUGH A PERIOD WITH START DATE & END DATE
+         *
+         * @throws MyException
+         */
+        public static void searchPurchaseByPeriod () throws MyException {
+            System.out.println("--> Rechercher les achats sur une période <-- ");
+
+            System.out.println("Entrer la date de début (jj/MM/yyyy). ");
+            LocalDate startDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            System.out.println("Entrer la date de fin (jj/MM/yyyy). ");
+            LocalDate endDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            System.out.println(PurchaseHistory.getPurchasesByPeriod(startDate, endDate));
+
+        }
+
+        /**
+         * HISTORY OF PURCHASE RESEARCH BY DATE OR PERIOD
+         * @throws MyException
+         */
+        public static void askResearchHistoryPurchase () throws MyException {
+
+            System.out.println(" En quoi puis-je vous aider ? ");
+            System.out.println("1 -- Vous souhaitez afficher les achats de la journée ? Tapez 1 ");
+            System.out.println("2 -- Vous souhaitez afficher les achats pour une date donnée ? Tapez 2 ");
+            System.out.println("3 -- Vous souhaitez afficher les achats pour une période donnée ? Tapez 3 ");
+            System.out.println("0 -- Si vous souhaitez revenir au menu principal : Tapez 0 ");
+            int reply = sc.nextInt();
+
+            if (reply == 1) {
+                searchPurchaseToday();
+            } else if (reply == 2) {
+                searchPurchaseByDate();
+            } else if (reply == 3) {
+                searchPurchaseByPeriod();
+            }
+            if (reply < 0 || reply >= 3) {
+                throw new MyException(" Veuillez choisir le type de recherche ou  retourner au menu en tapant [0-3] ");
+            } else {
+                if (reply == 0) ;
+                displayMenu();
+            }
+
+        }
 
 
 //    /**
@@ -664,108 +740,108 @@ public class PharmaSee {
 //        }
 
 
-    /**
-     * DISPLAY DRUGS' LIST
-     *
-     * @param drugs ArrayList
-     */
-    public static void displayDrugsList(ArrayList drugs) {
+        /**
+         * DISPLAY DRUGS' LIST
+         *
+         * @param drugs ArrayList
+         */
+        public static void displayDrugsList (ArrayList drugs){
 
-        System.out.println("******** Affichage des médicaments : ********");
-        for (int i = 0; i < drugsList.size(); i++) {
+            System.out.println("******** Affichage des médicaments : ********");
+            for (int i = 0; i < drugsList.size(); i++) {
 
-            System.out.println(drugsList.get(i).toString());
+                System.out.println(drugsList.get(i).toString());
+            }
         }
-    }
 
-    /**
-     * CREATION OF A PHYSICIAN
-     *
-     */
-    public static void createPhysician() {
-        afficheMessage(" +++++++++++  Créer et ajouter un médecin : ++++++++++ ", 0);
+        /**
+         * CREATION OF A PHYSICIAN
+         *
+         */
+        public static void createPhysician () {
+            afficheMessage(" +++++++++++  Créer et ajouter un médecin : ++++++++++ ", 0);
 
-        System.out.println("Merci de saisir nom du docteur. ");
-        lastName = sc.nextLine();
+            System.out.println("Merci de saisir nom du docteur. ");
+            lastName = sc.nextLine();
 
-        System.out.println("Le prénom du docteur.");
-        firstName = sc.nextLine();
+            System.out.println("Le prénom du docteur.");
+            firstName = sc.nextLine();
 
-        System.out.println("Merci de saisir l'email du docteur. ");
-        email = sc.nextLine();
+            System.out.println("Merci de saisir l'email du docteur. ");
+            email = sc.nextLine();
 
-        System.out.println("Son numéro de téléphone. ");
-        phoneNumber = sc.nextLine();
+            System.out.println("Son numéro de téléphone. ");
+            phoneNumber = sc.nextLine();
 
-        System.out.println("Merci de saisir l'adresse avec ce format : 5 rue de la paillette.");
-        address = sc.nextLine();
+            System.out.println("Merci de saisir l'adresse avec ce format : 5 rue de la paillette.");
+            address = sc.nextLine();
 
-        System.out.println("Le code postal sous ce format : 54136. ");
-        postCode = sc.nextLine();
+            System.out.println("Le code postal sous ce format : 54136. ");
+            postCode = sc.nextLine();
 
-        System.out.println("La ville. ");
-        city = sc.nextLine();
+            System.out.println("La ville. ");
+            city = sc.nextLine();
 
-        afficheMessage("Et enfin, le numero RPPS du docteur", 1);
-        rpps = sc.nextLine();
+            afficheMessage("Et enfin, le numero RPPS du docteur", 1);
+            rpps = sc.nextLine();
 
-        sc.nextLine();// vider le buffer
-    }
+            sc.nextLine();// vider le buffer
+        }
 
-    /**
-     * APPROVAL, BACK OR RETURN TO THE MENU
-     *
-     * @throws MyException
-     */
-    public static char approval(char choice) throws MyException {
+        /**
+         * APPROVAL, BACK OR RETURN TO THE MENU
+         *
+         * @throws MyException
+         */
+        public static char approval ( char choice) throws MyException {
 
-        boolean error = true;
-        choice = 'o';
-        do {
-            System.out.println("Êtes vous sur de votre choix ? Pour OUI, tapez o / " +
-                    "pour RETOURNER à l'étape précédente, tapez r / " +
-                    "pour vous rendre sur le MENU principal, tapez m");
-            choice = sc.nextLine().charAt(0);
-            if (choice != 'm' && choice != 'o' && choice != 'r') {
-                System.err.println("Veuillez choisir o - r ou m");
-            } else {
-                if (choice == 'm') {
-                    afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
-                    displayMenu();
-                } else if (choice == 'r') {
-                    afficheMessage("-----> Vous voici de retour à l'étape précédente : ", 0);
-                    backLoop:
-                    break;
-                } else if  (choice == 'o') {
-                    afficheMessage(" Très bien, poursuivons : ", 1);
-                    break;
-                }
+            boolean error = true;
+            choice = 'o';
+            do {
+                System.out.println("Êtes vous sur de votre choix ? Pour OUI, tapez o / " +
+                        "pour RETOURNER à l'étape précédente, tapez r / " +
+                        "pour vous rendre sur le MENU principal, tapez m");
+                choice = sc.nextLine().charAt(0);
+                if (choice != 'm' && choice != 'o' && choice != 'r') {
+                    System.err.println("Veuillez choisir o - r ou m");
+                } else {
+                    if (choice == 'm') {
+                        afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
+                        displayMenu();
+                    } else if (choice == 'r') {
+                        afficheMessage("-----> Vous voici de retour à l'étape précédente : ", 0);
+                        backLoop:
+                        break;
+                    } else if (choice == 'o') {
+                        afficheMessage(" Très bien, poursuivons : ", 1);
+                        break;
+                    }
 //
 //                afficheMessage("-----> Vous voici de retour à l'étape précédente : ", 0);
 //
 //                afficheMessage(" Très bien, poursuivons : ", 1);
-            }
-        } while (error);
+                }
+            } while (error);
 
-        return choice;
-    }
-
-    /**
-     * GO BACK TO MENU OR END OF PROGRAM
-     * @throws MyException
-     */
-    public static void endProgram() throws MyException {
-        System.out.println("---> Si vous souhaitez vous retourner au menu principal, tapez 1 ");
-        System.out.println("---> Si vous souhaitez quitter le programme, merci de tapez 0 .");
-        int choice = sc.nextInt();
-        if (choice!=1 && choice!=0){
-            throw new MyException("Votre saisie est incorrecte. Vous devez taper 1 ou 0. ");
-            } else if (choice==1){
-            afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
-            } else if  (choice==0) {
-            System.exit(0);
+            return choice;
         }
-    }
+
+        /**
+         * GO BACK TO MENU OR END OF PROGRAM
+         * @throws MyException
+         */
+        public static void endProgram () throws MyException {
+            System.out.println("---> Si vous souhaitez vous retourner au menu principal, tapez 1 ");
+            System.out.println("---> Si vous souhaitez quitter le programme, merci de tapez 0 .");
+            int choice = sc.nextInt();
+            if (choice != 1 && choice != 0) {
+                throw new MyException("Votre saisie est incorrecte. Vous devez taper 1 ou 0. ");
+            } else if (choice == 1) {
+                afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
+            } else if (choice == 0) {
+                System.exit(0);
+            }
+        }
         /**
          * AFFICHAGE MESSAGE ERREUR EN ROUGE
          * @param message

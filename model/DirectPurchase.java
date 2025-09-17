@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -13,13 +14,13 @@ public class DirectPurchase {
     private Drug drug;
     private double price;
     private int quantity;
-    private LocalDate purchaseDate;
+    private LocalDateTime purchaseDate;
     private double amount;
-    private static ArrayList<DirectPurchase> directPurchaseList;
+    public static ArrayList<DirectPurchase> directPurchaseList;
 
 
 
-    public DirectPurchase(LocalDate purchaseDate,Drug drug,double price,int quantity) throws MyException {
+    public DirectPurchase(LocalDateTime purchaseDate, Drug drug, int quantity, double price) throws MyException {
         this.setPurchaseDate(purchaseDate);
         this.setDrug(drug);
         this.setPrice(price);
@@ -55,11 +56,11 @@ public class DirectPurchase {
         this.quantity = quantity;
     }
 
-    public LocalDate getPurchaseDate() {
+    public LocalDateTime getPurchaseDate() {
         return this.purchaseDate;
     }
 
-    public void setPurchaseDate(LocalDate purchaseDate) {
+    public void setPurchaseDate(LocalDateTime purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
@@ -80,31 +81,29 @@ public class DirectPurchase {
     }
 
 
-    /**
-     * RESEARCH DIRECT PURCHASE BY DATE
-     * @param
-     * @return DirectPurchase
-     */
-
+//    /**
+//     * RESEARCH DIRECT PURCHASE BY DATE
+//     * @param
+//     * @return DirectPurchase
+//     */
 //    public static DirectPurchase searchDirectPurchase(LocalDate getPurchaseDate)  {
 //        for (int i = 0; i < directPurchaseList.size(); i++) {
-//            if (getPurchaseDate.isEqual(LocalDate.)) {
+//            if (getPurchaseDate.isEqual(LocalDate )) {
 //                return directPurchaseList.get(i);
 //            }
 //        }
 //        return null;
 //    }
-//
-//    /**
-//     * ADD DIRECT PURCHASE , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
-//     * @param DirectPurchase
-//     */
-//
-//    public static void addDirectPurchase(DirectPurchase DirectPurchase) {
-//        directPurchaseList.add(DirectPurchase);
-//
-//        System.out.println(" L'achat direct suivant a été ajouté : " + DirectPurchase.toString());
-//    }
+
+    /**
+     * ADD DIRECT PURCHASE , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
+     * @param DirectPurchase
+     */
+    public static void addDirectPurchase(DirectPurchase DirectPurchase) {
+        directPurchaseList.add(DirectPurchase);
+
+        System.out.println(" L'achat direct suivant a été ajouté : " + DirectPurchase.toString());
+    }
 
 
     @Override
