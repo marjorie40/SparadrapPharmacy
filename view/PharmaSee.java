@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+import static model.Drug.drugsForPrescription;
 import static model.Drug.drugsList;
 import static model.Mutual.mutualList;
 import static model.Physician.listPhysicians;
@@ -210,7 +211,6 @@ public class PharmaSee {
 
     /**
      * RETURN THE PRESCRIPTION
-     *
      * @return prescription
      */
     public static Prescription getPrescription() {
@@ -219,7 +219,6 @@ public class PharmaSee {
 
     /**
      * RETURN THE PURCHASE LIST OF THE DAY
-     *
      * @return purchasesByDay
      */
     public static LocalDate getPurchasesByDay() {
@@ -228,7 +227,6 @@ public class PharmaSee {
 
     /**
      * START OF THE APP CHOICE NOT SECURE
-     *
      * @param response of the user
      * @return response
      */
@@ -250,7 +248,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY MAIN MENU AND READ USER CHOICE
-     *
      * @return user choice
      */
     public static int displayMenu() throws  MyException {
@@ -261,7 +258,7 @@ public class PharmaSee {
         System.out.println("1 - Effectuer un achat");
         System.out.println("2 - Consulter l'historique des achats");
         System.out.println("3 - Consulter la liste des médecins");
-        System.out.println("4 - Consulter la liste des patients (clients)");
+        System.out.println("4 - Consulter la page Patient.e.s (clients)");
         //System.out.println("5 - Rechercher : un patient, un médecin, un médicament, une mutuelle, ") ; // en attente de validation chef projet,
         // visuel card pour filtrer la zone de recherche puis champs de saisie pour la recherche (orienté par la selection précedente)
         //System.out.println("6 - Afficher les prêts") ;
@@ -280,7 +277,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY PHYSICIAN'S LIST
-     *
      * @param physicians ArrayList
      */
     public static void displayListPhysician(ArrayList physicians) {
@@ -308,7 +304,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY PURCHASES' LIST
-     *
      * @param purchases ArrayList
      */
     public static void displayPurchaseList(ArrayList purchases) {
@@ -322,7 +317,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY MUTUALS' NAMES LIST
-     *
      * @param mutualsName ArrayList
      */
     public static void displayMutualListName(ArrayList mutualsName) {
@@ -336,7 +330,6 @@ public class PharmaSee {
 
     /**
      * USER CHOICE FOR PHYSICIAN
-     *
      * @param choice
      * @throws MyException choice > 0 && choice < size list
      */
@@ -359,7 +352,6 @@ public class PharmaSee {
 
     /**
      * USER CHOICE FOR MUTUAL
-     *
      * @param choice
      * @throws MyException choice > 0 && choice < size list
      */
@@ -379,7 +371,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY MUTUAL'S LIST
-     *
      * @param mutuals ArrayList
      */
     public static void displayMutualList(ArrayList mutuals) {
@@ -393,7 +384,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY PATIENT'S LIST
-     *
      * @param patients ArrayList
      */
     public static void displayListPatients(ArrayList patients) {
@@ -407,7 +397,6 @@ public class PharmaSee {
 
     /**
      * DISPLAY PATIENT'S LASTNAME AND FIRSTNAME LIST
-     *
      * @param patientsName ArrayList
      */
     public static void displayListPatientsName(ArrayList patientsName) {
@@ -423,7 +412,6 @@ public class PharmaSee {
 
     /**
      * USER CHOICE FOR PATIENT
-     *
      * @param choice
      * @throws MyException choice > 0 && choice < size list
      */
@@ -511,6 +499,26 @@ public class PharmaSee {
 
     }
 
+    /**
+     * REMOVE PATIENT FROM THE PATIENTLIST
+     * @param choice
+     * @return choice
+     * @throws MyException
+     */
+    public static int removePatient(int choice) throws MyException {
+        afficheMessage("^^^ Ci-dessus une aide pour saisir le numéro de patient à supprimer.^^^ \nSi vous souhaitez quitter, saississez un nombre négatif. ", 1);
+        afficheMessage("Assurez-vous que vous supprimez LE BON PATIENT en consultant la liste suivante : \n" + listPatients, 0);
+        choice = sc.nextInt();
+        if ( choice > listPatients.size()) {
+            throw new MyException("Le choix est invalide. Veuillez recommencer. ");
+        } else if (choice < 0) {
+            System.exit(0);
+        }else {
+            Patient.removePatient(listPatients.get(choice - 1));
+        }
+        return choice;
+    }
+
 //    /**
 //     * ASK FOR PURCHASE WITH PRESCRIPTION
 //     *
@@ -533,45 +541,46 @@ public class PharmaSee {
 //    }
 
 
-//    /**
-//     * CREATION PURCHASE
-//     *
-//     * @throws MyException
-//     */
-//    public static void createPurchase() throws MyException {
-//
-//        System.out.println(" ************  ACHATS  ***************** ");
-//
-//        System.out.println("Entrer la date au format jj/mm/aaaa");
-//        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//
-//        System.out.println("Ajouter l'ordonnance");// Prescription recupération du medecin et du patient et mutuelle
-//        System.out.println("Entrez le numéro de l'ordonnance.");
-//        System.out.println(prescriptionList);
-//        int selection = sc.nextInt();
-//        if (selection< 0 || selection>prescriptionList.size()) {
-//            throw new MyException("La saisie est invalide.");
-//        } else {
-//            System.out.println(""+ prescriptionList.getLast());
-//
-//        }
-//        Prescription.searchPrescriptionByPatient("Client");
-//
-//        System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
-//        drugName = sc.nextLine().toUpperCase().trim();
-//        if (drugName.isEmpty()) {
-//            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
-//        } else {
-//            if (drugName.equalsIgnoreCase(getDrugName()));
-//            System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
-//
-//
-//
-//            System.out.println("La quantité");// * le prix pour amount * coef mutuelle
-//
-//            System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
-//        }
-//    }
+    /**
+     * CREATION PURCHASE
+     * @throws MyException
+     */
+    public static void createPurchase() throws MyException {
+
+        System.out.println(" ************  ACHATS  ***************** ");
+
+        System.out.println("Entrer la date au format jj/mm/aaaa");
+        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        System.out.println("Ajouter l'ordonnance");// Prescription recupération du medecin et du patient et mutuelle
+        drugsForPrescription = new ArrayList<>();
+        System.out.println("Entrez le numéro de l'ordonnance.");
+        System.out.println(drugsForPrescription);
+        getPrescription();
+        int selection = sc.nextInt();
+        if (selection< 0 || selection>drugsForPrescription.size()) {
+            throw new MyException("La saisie est invalide.");
+        } else {
+            System.out.println(""+ prescriptionList.getLast());
+
+        }
+        Prescription.searchPrescriptionByPatient("Client");
+
+        System.out.println("Chercher le produit (médicament). ");// Drug recupération du prix
+        //drugName = sc.nextLine().toUpperCase().trim();
+        if (drugName==null) {
+            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
+        } else {
+            if (drugName.equals(getDrugName()));
+            System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
+
+
+
+            System.out.println("La quantité");// * le prix pour amount * coef mutuelle
+
+            System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
+        }
+    }
 
 //    /**
 //     * CREATION DIRECT PURCHASE
@@ -620,6 +629,7 @@ public class PharmaSee {
         LocalDateTime dateOfPurchase = LocalDateTime.now();
 
         System.out.println(drugsList);
+
         System.out.println("Merci d'entrer le nom du médicament");
         Drug.searchDrug(sc.nextLine());
 
@@ -643,7 +653,7 @@ public class PharmaSee {
             System.out.println("************  HISTORIQUE DES ACHATS  *****************");
             for (int i = 0; i < PurchaseHistory.purchaseHistoryList.size(); i++) {
 
-                System.out.println(PurchaseHistory.purchaseHistoryList.get(i).toString());
+                System.out.println(PurchaseHistory.purchaseHistoryList.get(i).toString()+"\n");
             }
         }
 
@@ -666,7 +676,7 @@ public class PharmaSee {
             System.out.println("--> Rechercher les achats d'une journée <-- ");
 
             System.out.println("Entrer la date souhaitée (jj/MM/yyyy). ");
-            LocalDate oneDay = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalDate oneDay = LocalDate.parse(sc.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             System.out.println(PurchaseHistory.getPurchasesByDay(oneDay));
         }
 
@@ -679,12 +689,12 @@ public class PharmaSee {
             System.out.println("--> Rechercher les achats sur une période <-- ");
 
             System.out.println("Entrer la date de début (jj/MM/yyyy). ");
-            LocalDate startDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalDate startDate = LocalDate.parse(sc.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
             System.out.println("Entrer la date de fin (jj/MM/yyyy). ");
-            LocalDate endDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalDate endDate = LocalDate.parse(sc.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            System.out.println(PurchaseHistory.getPurchasesByPeriod(startDate, endDate));
+            System.out.println(PurchaseHistory.getPurchasesByPeriod(startDate,endDate));
 
         }
 
@@ -692,14 +702,15 @@ public class PharmaSee {
          * HISTORY OF PURCHASE RESEARCH BY DATE OR PERIOD
          * @throws MyException
          */
-        public static void askResearchHistoryPurchase () throws MyException {
+        public static int askResearchHistoryPurchase (int reply) throws MyException {
 
-            System.out.println(" En quoi puis-je vous aider ? ");
+
+            afficheMessage("--> En quoi puis-je vous aider ?\n ",1);
             System.out.println("1 -- Vous souhaitez afficher les achats de la journée ? Tapez 1 ");
             System.out.println("2 -- Vous souhaitez afficher les achats pour une date donnée ? Tapez 2 ");
             System.out.println("3 -- Vous souhaitez afficher les achats pour une période donnée ? Tapez 3 ");
             System.out.println("0 -- Si vous souhaitez revenir au menu principal : Tapez 0 ");
-            int reply = sc.nextInt();
+            reply = sc.nextInt();
 
             if (reply == 1) {
                 searchPurchaseToday();
@@ -712,9 +723,9 @@ public class PharmaSee {
                 throw new MyException(" Veuillez choisir le type de recherche ou  retourner au menu en tapant [0-3] ");
             } else {
                 if (reply == 0) ;
-                displayMenu();
+                //displayMenu();
             }
-
+            return reply;
         }
 
 

@@ -1,6 +1,7 @@
 package model;
 
 import exception.MyException;
+import view.PharmaSee;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class Patient extends People {
     }
 
     /**
-     *
+     *DEFINE THE SECURITY SOCIAL NUMBER OF THE PATIENT
      * @param socialSecurityNumber
      * @throws MyException
      */
@@ -48,9 +49,19 @@ public class Patient extends People {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
+    /**
+     * RETURN THE BIRTH DATE OF THE PATIENT
+     * @return
+     */
     public LocalDate getDateOfBirth() {
         return this.dateOfBirth;
     }
+
+    /**
+     * DEFINE THE BIRTH DATE OF THE PATIENT
+     * @param dateOfBirth
+     * @throws MyException
+     */
     public void setDateOfBirth(LocalDate dateOfBirth) throws MyException {
         if (dateOfBirth == null ) {
             throw new MyException("La date de naissance n'est pas valide, veuillez saisir une date au format : AAAA-MM-JJ .");
@@ -58,9 +69,19 @@ public class Patient extends People {
         this.dateOfBirth = dateOfBirth;
     }
 
+    /**
+     * RETURN THE MUTUAL OF THE PATIENT
+     * @return
+     */
     public Mutual getMutual() {
         return this.mutual;
     }
+
+    /**
+     * DEFINE THE MUTUAL OF THE PATIENT
+     * @param mutual
+     * @throws MyException
+     */
     public void setMutual(Mutual mutual) throws MyException {
         if (mutual == null) {
             throw new MyException("La mutuelle n'est pas valide.");
@@ -68,9 +89,19 @@ public class Patient extends People {
         this.mutual = mutual;
     }
 
+    /**
+     * RETURN THE PHYSICIAN ASSOCIATE TO THIS PATIENT
+     * @return
+     */
     public Physician getPhysician() {
         return this.physician;
     }
+
+    /**
+     * DEFINE THE PHYSICIAN ASSOCIATE TO THIS PATIENT
+     * @param physician
+     * @throws MyException
+     */
     public void setPhysician(Physician physician) throws MyException {
         if (physician == null ) { //|| !physician.matches(REGEX_IDENTITE)
             throw new MyException("La saisie de l'identité du médecin est invalide, veuiller réessayer. ");
@@ -78,18 +109,35 @@ public class Patient extends People {
         this.physician = physician;
     }
 
+    /**
+     * RETURN THE PRESCRIPTION OF THIS PATIENT
+     * @return
+     */
     public Prescription getPrescription() {
         return this.prescription;
     }
 
+    /**
+     * DEFINE THE PRESCRIPTION OF THIS PATIENT
+     * @param prescription
+     */
     public void setPrescription(Prescription prescription) {
             this.prescription = prescription;
         }
 
-
+    /**
+     * RETURN THE LIST OF PATIENTS
+     * @return
+     */
     public static ArrayList<Patient> getListPatients() {
         return listPatients;
     }
+
+    /**
+     * DEFINE THE LIST OF PATIENTS
+     * @param listPatients
+     * @throws MyException
+     */
     public static void setListPatients(ArrayList<Patient> listPatients) throws MyException {
         if (listPatients == null) {
             throw new MyException("Il n'y a pas de patient dans la liste. Veuillez ajouter des patients. ");
@@ -121,8 +169,21 @@ public class Patient extends People {
         return null;
     }
 
+
+    /**
+     * REMOVE A PATIENT
+     * @param Patient
+     */
     public static void removePatient(Patient Patient) {
         listPatients.remove(Patient);
+    }
+
+    /**
+     * UPDATE PATIENT
+     * @param Patient
+     */
+    public static void updatePatient(Patient Patient) {
+        listPatients.add(Patient);
     }
 
     @Override

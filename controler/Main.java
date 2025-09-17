@@ -41,8 +41,6 @@ public class Main {
 
 
 
-
-
         //PharmaSee.approval('o');
 
         //PharmaSee.createPurchase();
@@ -154,15 +152,22 @@ public class Main {
                     PharmaSee.displayPurchaseHistoryList();
                     boolean failure = true;
                     do {
-                        PharmaSee.askResearchHistoryPurchase();
-
-                        //rechercher un achats par date
-                        PharmaSee.searchPurchaseByDate();
-                        // recherche achats du jour
-                        PharmaSee.searchPurchaseToday();
-                        //recherche achats par période
-                        PharmaSee.searchPurchaseByPeriod();
-
+                        int reply=0;
+                        PharmaSee.askResearchHistoryPurchase(reply);
+                        if (reply==2){
+                            //rechercher un achats par date
+                            PharmaSee.searchPurchaseByDate();
+                            break;
+                        } else if (reply==1) {
+                            // recherche achats du jour
+                            PharmaSee.searchPurchaseToday();
+                            break;
+                        } else {
+                            if (reply == 3)
+                                //recherche achats par période
+                                PharmaSee.searchPurchaseByPeriod();
+                            continue;
+                        }
                     } while (failure);
 
 
@@ -224,10 +229,8 @@ public class Main {
                         //modifier données patient
                             } else if (choice==3) {
                     //supprimer les données du patient
-                        do {
-                            Patient.searchPatient("Client");  //combo display et choice pour select patient a suppr
-                            Patient.removePatient(Patient.getListPatients().get(0));
-                        } while (Patient.searchPatient("Client") == null);
+                            PharmaSee.displayListPatientsName(listPatients);
+                            PharmaSee.afficheMessage("Le patient "+ PharmaSee.removePatient(choice) +" a été supprimé", 0);
                             } else {
                                 if (choice==0);
                                 System.out.println("Vous allez retourner au menu");

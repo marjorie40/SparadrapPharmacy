@@ -10,7 +10,7 @@ public class Purchase {
 
     private boolean document = true;
     private ArrayList<Prescription> prescriptionList;
-    private LocalDate purchaseDate = LocalDate.now();
+    private LocalDate purchaseDate ;
     private Prescription prescription;
     private int quantity;
     private double sum; // = sum of drugs prices
