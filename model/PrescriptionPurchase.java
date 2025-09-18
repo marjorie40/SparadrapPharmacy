@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class PrescriptionPurchase extends DirectPurchase {
-
+    /**
+     * NOT YET USED
+     */
     private Patient patient;
     private ArrayList<Prescription> prescriptionsList;
     public PrescriptionPurchase(LocalDateTime purchaseDate, Drug drug, int quantity, double price,

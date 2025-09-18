@@ -13,7 +13,15 @@ public class Prescription {
     private Drug drug;
     private ArrayList<Drug> drugForPrescription;
 
-
+    /**
+     * CONSTRUCTOR OF THE PRESCRIPTION
+     * @param number
+     * @param today
+     * @param physician
+     * @param patient
+     * @param drug
+     * @param drugForPrescription
+     */
     public Prescription(int number, LocalDate today, Physician physician, Patient patient,
                         Drug drug,ArrayList<Drug> drugForPrescription) {
         this.setToday(today);
@@ -21,7 +29,6 @@ public class Prescription {
         this.setPatient(patient);
         this.setDrugForPrescription(drugForPrescription);
     }
-
 
     public static ArrayList<Prescription> prescriptionList =  new ArrayList<Prescription> ();
 
@@ -95,6 +102,21 @@ public class Prescription {
             prescriptionList.add(prescription);
             System.out.println("Ordonnance ajoutée : " + prescription.toString());
         }
+    }
+    /**
+     * REMOVE A PRESCRIPTION
+     * @param Prescription
+     */
+    public static void removePrescription(Prescription Prescription) {
+        prescriptionList.remove(Prescription);
+    }
+
+    /**
+     * UPDATE PRESCRIPTION
+     * @param Prescription
+     */
+    public static void updatePrescription(Prescription Prescription) {
+        prescriptionList.add(Prescription);
     }
 
     @Override

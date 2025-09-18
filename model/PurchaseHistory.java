@@ -27,7 +27,6 @@ public class PurchaseHistory {
         return purchaseHistoryList;
     }
 
-
     /**
      * DEFINE THE PURCHASE LIST HISTORY
      * @param purchaseHistoryList
@@ -89,6 +88,20 @@ public class PurchaseHistory {
         return purchaseByPeriod;
     }
 
+    /**
+     * REMOVE A PATIENT
+     * @param  purchaseHistory
+     */
+    public static void removePurchaseHistory(PurchaseHistory purchaseHistory) {
+        purchaseHistoryList.remove(purchaseHistory);
+    }
 
+    /**
+     * UPDATE PATIENT
+     * @param purchase
+     */
+    public static void updatePurchaseHistory(Purchase purchase) {
+        purchaseHistoryList.add(purchase);
+    }
 }
 

@@ -18,6 +18,21 @@ public class Patient extends People {
 
     public static ArrayList<Patient> listPatients = new ArrayList<Patient>();
 
+    /**
+     * CONSTRUCTOR PATIENT extends PEOPLE
+     * @param lastName
+     * @param firstName
+     * @param dateOfBirth
+     * @param email
+     * @param phoneNumber
+     * @param address
+     * @param postCode
+     * @param city
+     * @param socialSecurityNumber
+     * @param physician
+     * @param mutual
+     * @throws MyException
+     */
     public Patient (String lastName, String firstName, LocalDate dateOfBirth, String email,
                     String phoneNumber, String address, String postCode, String city,
                     String socialSecurityNumber, Physician physician, Mutual mutual ) throws MyException {
@@ -145,7 +160,6 @@ public class Patient extends People {
         Patient.listPatients = listPatients;
     }
 
-
     /**
      * ADD PATIENT , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
      * @param Patient
@@ -169,7 +183,6 @@ public class Patient extends People {
         return null;
     }
 
-
     /**
      * REMOVE A PATIENT
      * @param Patient
@@ -185,6 +198,7 @@ public class Patient extends People {
     public static void updatePatient(Patient Patient) {
         listPatients.add(Patient);
     }
+
 
     @Override
     public String toString() {

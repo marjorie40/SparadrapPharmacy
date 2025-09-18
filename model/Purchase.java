@@ -18,6 +18,14 @@ public class Purchase {
 
     public static ArrayList<Purchase> purchaseList = new ArrayList<>();
 
+    /**
+     * CONSTRUCTOR PRESCRIPTION
+     * @param purchaseDate
+     * @param prescription
+     * @param quantity
+     * @param sum
+     * @throws MyException
+     */
     public Purchase(LocalDate purchaseDate, Prescription prescription, int quantity, double sum)throws MyException {
         this.setPurchaseDate(purchaseDate);
         this.setPrescription(prescription);
@@ -106,10 +114,22 @@ public class Purchase {
         }
         return null;
     }
-//    public static deletePurchase() {
-//
-//    }
 
+    /**
+     * REMOVE A PURCHASE
+     * @param Purchase
+     */
+    public static void removePurchase(Purchase Purchase) {
+        purchaseList.remove(Purchase);
+    }
+
+    /**
+     * UPDATE PURCHASE
+     * @param Purchase
+     */
+    public static void updatePhysician(Purchase Purchase) {
+        purchaseList.add(Purchase);
+    }
 
     @Override
     public String toString() {

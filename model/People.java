@@ -16,7 +16,17 @@ public class People {
     //private String REGEX_ADDRESS = "^[a-zA-Z]{2,}$";
     //private String REGEX_POSTCODE = "^(\\d{5})?$";
 
-
+    /**
+     * CONSTRUCTOR OF PEOPLE THE SUPER CLASS
+     * @param lastName
+     * @param firstName
+     * @param email
+     * @param phoneNumber
+     * @param address
+     * @param postCode
+     * @param city
+     * @throws MyException
+     */
     public People(String lastName, String firstName,  String email, String phoneNumber, String address, String postCode,
                 String city) throws MyException {
         this.setLastName (lastName);
@@ -26,9 +36,8 @@ public class People {
         this.setAddress(address);
         this.setPostCode(postCode);
         this.setCity(city);
-
-
     }
+
 
     public String getLastName() {
         return this.lastName;
@@ -51,7 +60,6 @@ public class People {
             this.firstName = firstName;
         }
     }
-
 
     public String getEmail() {
         return this.email;
@@ -108,5 +116,4 @@ public class People {
             this.postCode = postCode;
         }
     }
-
 }

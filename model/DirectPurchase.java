@@ -9,7 +9,9 @@ import exception.MyException;
 import model.Drug;
 
 public class DirectPurchase {
-
+    /**
+     * NOT YET USED
+     */
     private static DateTimeFormatter calendar;
     private Drug drug;
     private double price;

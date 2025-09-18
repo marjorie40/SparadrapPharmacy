@@ -10,18 +10,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.awt.*;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static model.DirectPurchase.directPurchaseList;
 import static model.Drug.*;
 import static model.Mutual.mutualList;
 import static model.Patient.listPatients;
-import static model.Patient.searchPatient;
 import static model.Physician.*;
 import static model.Prescription.prescriptionList;
-import static model.Purchase.addPurchase;
 import static model.Purchase.purchaseList;
 import static model.PurchaseHistory.purchaseHistoryList;
 
@@ -37,61 +33,13 @@ public class Main {
 
         PharmaSee.afficheMessage("          ***********  Bienvenue  **********", 1);
 
-        //PharmaSee.choiceDrug(1);
-        //PharmaSee.createPurchase();
-//        PharmaSee.displayListDrugName(drugsList);
-
-
-        //PharmaSee.approval('o');
-
-        //PharmaSee.createPurchase();
-
-        //Mutual.displayMutual();
-
-
-
-//        PharmaSee.displayListPhysicianName(listPhysicians);
-//        PharmaSee.choicePhysician(3);
-//
-//
-//        PharmaSee.displayListPatientsName(listPatients);
-//        PharmaSee.choicePatient(2);
-//
-        //PharmaSee.askCreatePurchase();
-
-
-
-
-        //PharmaSee.processPurchase();
-
-
-//        // Afficher la liste des médecins par noms
-//        PharmaSee.displayListPhysicianName(listPhysicians);
-//        //choix du médecin
-//        //afficher en détail
-//        Physician physician = PharmaSee.choicePhysician(1);
-
-
-//        char approval = 'z';
-//        switch (approval) {
-//            case 'o':
-//                System.out.println(" Voici les détails concernant ce médecin : ");
-//        }
-
-            Drug drug5 = new Drug("Doliprane", "Analgésique", 7.50, 35,
-                    LocalDate.of(1963, 11, 15));
-//
-//        PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.of(2025,9,9,12,10),
-//                drug5, 2, 20.3 ));
-
 //        // STEP 1 - Entrer dans le programme ou le quitter
-//        PharmaSee.init("oui");
+        PharmaSee.init("oui");
 
         /**
          * MAIN MENU MANAGE BY SWITCH, BOOLEAN - STEP 2
          * @throws Exception
          */
-
         boolean end = false;
 
             menu:
@@ -102,34 +50,7 @@ public class Main {
                 case 1: //achat
 
                     PharmaSee.displaySelectPurchase("OUI");
-                    //PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.now(),drug5, 5, 12.1));
-                    //boolean again= true;
 
-//                    try {
-//                        DirectPurchase directPurchase1 = new DirectPurchase(PharmaSee.getDateOfPurchase(),PharmaSee.getName(),
-//                                PharmaSee.getQuantity(), PharmaSee.getPrice());
-//                        System.out.println(directPurchase1.toString());
-//                        DirectPurchase.addDirectPurchase(directPurchase1);
-//
-//                        System.out.println("Pour ajouter un achat tapez 1, pour valider et finaliser la vente tapez 2, pour annuler et retourner au menu principal tapez 0");
-//                        int reply = sc.nextInt();
-//                        if (reply == 1) {
-//                            PharmaSee.createDirectPurchase(directPurchase1);
-//                        } else if (reply == 0) {
-//                            //userChoice = PharmaSee.displayMenu();
-//                            continue menu;
-//                        } else {
-//                            if (reply == 2) {
-//                                // DirectPurchase.addDirectPurchase(directPurchase1);
-//                                System.out.println("Votre achat a été enregistré. ");
-//                                System.exit(0);
-//                            }
-//                        }
-//                    } catch (MyException e) {
-//                        System.out.println(e.getMessage());
-//                    }
-
-//                    V1 pas OPS
                     boolean erreur = true;
                     do {
                         PharmaSee.createPurchase();
@@ -252,31 +173,6 @@ public class Main {
                     break;
                 }
             } while (!end);
-        // manque 1 }
-
-
-//        // affichage de la liste des médicaments OK
-//        PharmaSee.displayDrugsList(drugsList);
-
-        //test approval PLUS ok à compléter ou modifier
-        // PharmaSee.approval();
-//
-
-
-//        //fonctionnel mais physician Girl trouvé null
-//        Physician.searchPhysician("Girl");
-//        PharmaSee.afficheMessage("Trouvé : " + Physician.searchPhysician("Girl"), 1 );
-
-
-// ajouter un medecin a la liste medecin en recherchant par nom de famille ne fonctionne plus : to string physician null
-        // Physician.addPhysician(searchPhysician("Rolph"));
-
-//initialisation de l'app ok
-//        PharmaSee.init("non");
-//
-//
-// afficher la liste des mutuelles OK
-//        PharmaSee.displayMutualList(mutualList);
     }
 
     /**
@@ -354,8 +250,8 @@ public class Main {
         prescriptionList.add(prescription1);
         prescriptionList.add(prescription2);
 
-        Purchase purchase1 = new Purchase(LocalDate.now(), prescription1, 1, 25.42);
-        Purchase purchase2 = new Purchase(LocalDate.now(), prescription2, 1, 45.30);
+        Purchase purchase1 = new Purchase(LocalDate.of(2025,6,12), prescription1, 1, 25.42);
+        Purchase purchase2 = new Purchase(LocalDate.of(2025,3,2), prescription2, 1, 45.30);
         purchaseList = new ArrayList<>();
         purchaseList.add(purchase1);
         purchaseList.add(purchase2);
@@ -368,52 +264,9 @@ public class Main {
                 prescription2,1,45.52));
         history.addPurchaseHistory(new Purchase(LocalDate.of(2024,12,25),prescription2,
                 4,85.22));
-//        history.addPurchaseHistory(purchase1);
-//        history.addPurchaseHistory(purchase2);
+        history.addPurchaseHistory(new Purchase (LocalDate.now(), prescription1,
+                3,56.20));
 
-//        DirectPurchase directPurchaseNew= new DirectPurchase(LocalDateTime.now(),
-//                "amoxiciline", 2, 12.20);
-//        directPurchaseList.add(directPurchaseNew);
     }
 }
-
-
-//
-//        case 123://creation de patient (pas ops a 100/100)
-//        PharmaSee.createPatient();
-//
-//                            try {
-//Patient patient = new Patient(
-//        PharmaSee.getLastName(),
-//        PharmaSee.getFirstName(),
-//        PharmaSee.getDateOfBirth(),
-//        PharmaSee.getEmail(),
-//        PharmaSee.getAddress(), PharmaSee.getPhoneNumber(), PharmaSee.getPostCode(), PharmaSee.getCity(),
-//        PharmaSee.getSocialSecurityNumber(), PharmaSee.getPhysician(), PharmaSee.getMutual());
-//
-//                                Patient.listPatients.add(patient);
-//                            } catch (MyException e) {
-//        PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 1);
-//        } finally {
-//        // afficher la nouvelle liste OK jusque la
-//        PharmaSee.displayListPatients(listPatients);
-//                            }
-//
-//                                    case 911://creation de médecin (a tester)
-//                                    //Créer un médecin en console avec Exception, Ajout du nouveau medecin a la liste puis afficher la nouvelle liste
-//                                    PharmaSee.createPhysician();
-//                            try {
-//Physician physician = new Physician(PharmaSee.getLastName(), PharmaSee.getFirstName(),
-//        PharmaSee.getEmail(), PharmaSee.getPhoneNumber(),
-//        PharmaSee.getAddress(), PharmaSee.getPostCode(), PharmaSee.getCity(),
-//        PharmaSee.getRpps());
-//
-//                                Physician.listPhysicians.add(physician);
-//
-//                            } catch (MyException e) {
-//        PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 1);
-//        } finally {
-//        // afficher la nouvelle liste OK jusque la
-//        PharmaSee.displayListPhysician(listPhysicians);
-//                            }
 

@@ -15,9 +15,7 @@ public class Mutual {
     private double refundRate = 0.60;
 
     public static ArrayList<Mutual> mutualList = new ArrayList<>();
-    public static ArrayList<Mutual> getMutuals() {
-        return mutualList;
-    }
+
 
     public Mutual(String name, String address, String postCode, String city, String department,
                 String phoneNumber, String email, double refundRate) {
@@ -95,7 +93,9 @@ public class Mutual {
     public void setRefundRate(double refundRate) {
         this.refundRate = refundRate;
     }
-
+    public static ArrayList<Mutual> getMutuals() {
+        return mutualList;
+    }
     public ArrayList<Mutual> getMutualList() {
         return this.mutualList;
     }
@@ -126,6 +126,14 @@ public class Mutual {
         mutualList.add(Mutual);
 
         System.out.println(" Mutuelle ajoutée : " + Mutual.toString());
+    }
+
+    /**
+     * UPDATE MUTUAL
+     * @param Mutual
+     */
+    public static void updateMutual(Mutual Mutual) {
+        mutualList.add(Mutual);
     }
 
     /**

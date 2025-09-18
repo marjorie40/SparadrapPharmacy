@@ -16,7 +16,6 @@ import static model.Mutual.mutualList;
 import static model.Physician.listPhysicians;
 import static model.Prescription.prescriptionList;
 import static model.Purchase.purchaseList;
-import static model.PurchaseHistory.purchaseHistoryList;
 import static model.Patient.listPatients;
 import model.Prescription;
 
@@ -533,33 +532,12 @@ public class PharmaSee {
         return choice;
     }
 
-//    /**
-//     * ASK FOR PURCHASE WITH PRESCRIPTION
-//     *
-//     * @throws MyException
-//     */
-//    public static void askCreatePurchase() throws MyException {
-//        System.out.println("************  ACHATS  *****************");
-//
-//        System.out.println("La date de l'ordonnance (jj/mm/aaaa).");
-//        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//
-//        System.out.println("Merci de saisir le nom de l'article.");
-//        name = sc.nextLine().toUpperCase().trim();  //plus ops a partir d'ici
-//        if (name.isEmpty()) {
-//            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
-//        } else {
-//            name.equalsIgnoreCase(Drug.getDrugsForPrescription().toString());
-//        }
-//
-//    }
-
     /**
      * DRUG USER CHOICE INSIDE THE DRUGLIST
      * @param choice
      * @throws MyException
      */
-        public static void choiceDrug(int choice) throws MyException {
+        public static Drug choiceDrug(int choice) throws MyException {
             System.out.println("Veuillez taper le numero correspondant au médicament : ");
             choice = sc.nextInt();
             if (choice <= 0 || choice > Drug.drugsList.size()) {
@@ -569,6 +547,7 @@ public class PharmaSee {
                 Drug d = Drug.drugsList.get(choice - 1);
                 afficheMessage("Médicament sélectionné :  " + d.getName().toUpperCase()+"\nLe tarif unitaire : "
                         + d.getPrice() + " euros \n ",0);
+                return d;
             }
 
         }
@@ -588,17 +567,20 @@ public class PharmaSee {
 //        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         displayListDrugName(drugsList);
-        System.out.println(Drug.drugsList);
-        System.out.println("Sélectionnez un médicament.");
+        //System.out.println(Drug.drugsList);
         choiceDrug(1);
+        System.out.println("La quantité");// * le prix pour amount * coef mutuelle
 
         displayListPatientsName(listPatients);
-        System.out.println("-->Sélectionnez un patient (ACHAT DIRECT : tapez 1 patient = client anonyme.)");
+        System.out.println("--> Sélectionnez un patient (pour un ACHAT DIRECT : tapez 1 patient = client anonyme.)");
         choicePatient(1);
 
         displayListPhysicianName(listPhysicians);
-        System.out.println("-->Sélectionnez un médecin (ACHAT DIRECT : tapez 1 pour médecin Zéro.)");
+        System.out.println("--> Sélectionnez un médecin (pour un ACHAT DIRECT : tapez 1 pour médecin Zéro.)");
         choicePhysician(1);
+
+
+
 
         // Prescription recupération du medecin et du patient et mutuelle
         drugsForPrescription = new ArrayList<>();
@@ -623,31 +605,9 @@ public class PharmaSee {
             System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
 
 
-
-            System.out.println("La quantité");// * le prix pour amount * coef mutuelle
-
             System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
         }
     }
-
-//    /**
-//     * CREATION DIRECT PURCHASE
-//     *
-//     * @throws MyException
-//     */
-//    public static void createDirectPurchaseBis() throws MyException {
-//        System.out.println("************  ACHATS  *****************");
-//        //System.out.println("Entrer la date");
-//        //purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//        System.out.println("La date de l'achat : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
-//
-//        System.out.println("Chercher le produit (médicament). "); // Drug recupération du prix
-//
-//        System.out.println("La quantité"); // * le prix pour amount * coef mutuelle
-//        System.out.println("Souhaitez vous recommencer ? "); // incrémentation avec ajout à amount
-//
-//    }
-
 
     /**
      * USER SELECT THE PURCHASE TYPE : IF PRESCRIPTION --> PRESCRIPTION PURCHASE / IF NO --> DIRECT PURCHASE
@@ -757,7 +717,7 @@ public class PharmaSee {
             System.out.println("1 -- Vous souhaitez afficher les achats de la journée ? Tapez 1 ");
             System.out.println("2 -- Vous souhaitez afficher les achats pour une date donnée ? Tapez 2 ");
             System.out.println("3 -- Vous souhaitez afficher les achats pour une période donnée ? Tapez 3 ");
-            System.out.println("0 -- Si vous souhaitez revenir au menu principal : Tapez 0 ");
+            System.out.println("0 -- Si vous souhaitez revenir au menu précédent : Tapez 0 ");
             reply = sc.nextInt();
 
             if (reply == 1) {
@@ -767,7 +727,7 @@ public class PharmaSee {
             } else if (reply == 3) {
                 searchPurchaseByPeriod();
             }
-            if (reply < 0 || reply >= 3) {
+            if (reply < 0 || reply > 3) {
                 throw new MyException(" Veuillez choisir le type de recherche ou  retourner au menu en tapant [0-3] ");
             } else {
                 if (reply == 0) ;
@@ -775,29 +735,6 @@ public class PharmaSee {
             }
             return reply;
         }
-
-
-//    /**
-//     * USER CHOICE ANOTHER PURCHASE
-//     * @param purchase
-//     * @throws MyException
-//     */
-//    public static void anotherPurchase(Purchase purchase) throws MyException {
-//            System.out.println("Voulez vous ajouter un achat ? Tapez o pour oui, Tapez n pour non.");
-//            String reply =  sc.nextLine();
-//            if (reply.isEmpty()) {
-//                throw new MyException("Veuillez entrer votre réponse o pour OUI et n pour NON. ");
-//            } else {
-//                if (reply.equalsIgnoreCase("o")) {
-//                    processPurchase();
-//                } else {
-//                    if(reply.equalsIgnoreCase("n")) {
-//                        System.out.println("Merci de votre achat. ");
-//                    }
-//                }
-//            }
-//        }
-
 
         /**
          * DISPLAY DRUGS' LIST
@@ -890,13 +827,13 @@ public class PharmaSee {
          * @throws MyException
          */
         public static void endProgram () throws MyException {
-            System.out.println("---> Si vous souhaitez vous retourner au menu principal, tapez 1 ");
+            System.out.println("---> Si vous souhaitez vous retourner au menu, tapez 1 ");
             System.out.println("---> Si vous souhaitez quitter le programme, merci de tapez 0 .");
             int choice = sc.nextInt();
             if (choice != 1 && choice != 0) {
                 throw new MyException("Votre saisie est incorrecte. Vous devez taper 1 ou 0. ");
             } else if (choice == 1) {
-                afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
+                afficheMessage("-----> Vous voici de retour dans le menu  : ", 0);
             } else if (choice == 0) {
                 System.exit(0);
             }
@@ -914,123 +851,3 @@ public class PharmaSee {
             }
         }
     }
-
-
-
-
-//    /**
-//     * DISPLAY USER CHOICE PHYSICIAN'S DETAILS pas ops
-//     * @throws MyException
-//     */
-//    public static void detailPhysician(Physician p) throws MyException {
-//        System.out.println("Pour afficher les données de ce médecin tapez oui, pour retourner à la liste tapez retour. ");
-//        String input = sc.nextLine();  //ne demande pas la saisie passe direct aux if else
-//        if (input == null){
-//            throw new MyException("La saisie est invalide, veuillez taper oui ou retour");
-//        } else {
-//            if (input.equalsIgnoreCase("oui")) {
-//                System.out.println("Voici les détails : ");
-//                System.out.println(" recupération "+ get(choicePhysician(1)));
-//            } else {
-//                if (input.equalsIgnoreCase("retour")) {
-//                    int choice = 1;
-//                    choicePhysician(choice);
-//                }
-//            }
-//        }
-//    }
-
-
-
-
-//    public String loggin() throws MyException {
-//        System.out.println("Veuillez saisir l'identifiant à 5 chiffres. ");
-//        identification = sc.nextLine();
-//        if (!identification.matches(REGEX_POSTCODE)) {
-//            throw new MyException("L'identifiant est incorrect, veuillez saisir un identifiant à 5 chiffres.");
-//        }
-//        if (identification.equals("54130")) {
-//            System.out.println("Bonjour, entrez le mot de passe");
-//            password = sc.nextLine();
-//            if (!password.matches(REGEX_POSTCODE)) {
-//                throw new MyException("Le mot de passe incorrect, recommencez l'identification");
-//            } else if (password.equals("96857")) {
-//                PharmaSee.displayMenu();
-//            }
-//        } else {
-//            return identification;
-//        }
-//    }
-
-
-
-//
-//    /**
-//     * DIALOGUE TO MAKE A PURCHASE
-//     * @param
-//     * @throws MyException
-//     */
-//    public static void processPurchase () throws MyException {
-//        double sum = 0;
-//        double total = 0;
-//        System.out.println("Veuillez saisir le nom du médicament");
-//        String drug = sc.nextLine().toUpperCase().trim();
-//        if (drug.isEmpty()) {
-//            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
-//        } else {
-//            drug.equalsIgnoreCase(Drug.getName().toUpperCase().toString());
-//            sum += Drug.getPrice();
-//            total += sum;
-//        }
-
-
-//    public static void approval() throws MyException {
-//        System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o ;" +
-//                "pour retourner à l'étape précédente, tapez r ; " +
-//                "pour vous rendre sur le menu principal, tapez m.");
-//        char choice = sc.nextLine().charAt(0);
-//        switch (choice) {
-//            case 'r':
-//        }
-//
-//    }
-//    // test de label NON FONCTIONNEL
-//    public static void approvalTwo() throws MyException {
-//        System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o / " +
-//                "pour retourner à l'étape précédente, tapez r / " +
-//                "pour vous rendre sur le menu principal, tapez m");
-//        char choice = sc.nextLine().charAt(0);
-//
-//        stop:
-//        while (choice != 'm' && choice != 'r' && choice != 'o') {
-//            System.out.println("Êtes vous sur de votre choix ? Pour oui, tapez o / " +
-//                    "pour retourner à l'étape précédente, tapez r / " +
-//                    "pour vous rendre sur le menu principal, tapez m");
-//            if (choice == 'o') {
-//                afficheMessage(" Très bien, poursuivons : ", 1);
-//                break stop;
-//            } else {
-//                afficheMessage("-----> Vous voici de retour dans le menu principal : ", 0);
-//                displayMenu();
-//            }
-//        }
-//    }
-
-
-/**
- * PURCHASE PAGE
- */
-
-//    public static void processPurchase() throws MyException {
-//        afficheMessage("Bonjour, quel type d'achat souhaitez vous effectuer ?", 0);
-//        System.out.println("Pour un achat direct, tapez D / pour un achat avec ordonnance, tapez P");
-//        char reply = sc.nextLine().charAt(0);
-//        if  (reply == 'P') {
-//            approval();
-//
-//        }
-//
-//        Drug drug ;
-//
-//
-//    }
