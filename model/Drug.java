@@ -119,6 +119,15 @@ public Drug(String name, String category,double price, int quantity,LocalDate st
     }
 
     /**
+     * * ADD DRUG , RUN WELL ONE TIME, NEED DEBUGG IN MAIN
+     * @param Drug
+     */
+    public static void addDrug(Drug Drug) {
+        drugsList.add(Drug);
+        System.out.println("Le nouveau médicament est ajouté : " + Drug.toString());
+    }
+
+    /**
      * TO STRING METHODE
      * @return
      */

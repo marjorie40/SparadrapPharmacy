@@ -43,7 +43,7 @@ public class PharmaSee {
     private static LocalDate dateOfBirth;
     private static Mutual mutual;
     private static String referingPhysician;
-    private static Drug drugName;
+    private static Drug name;
     private static String drug ;
     private static LocalDate purchaseDate;
     private static LocalDateTime dateOfPurchase;
@@ -166,10 +166,10 @@ public class PharmaSee {
     /**
      * RETURN THE DURG NAME
      *
-     * @return drugName
+     * @return name
      */
-    public static Drug getDrugName() {
-        return drugName;
+    public static Drug getName() {
+        return name;
     }
 
     public static String getDrug(String drug) {
@@ -298,7 +298,21 @@ public class PharmaSee {
         for (int i = 0; i < listPhysicians.size(); i++) {
 
             System.out.print((i + 1) + " - " + "Dr " + listPhysicians.get(i).getLastName().toUpperCase());
-            System.out.println(" " + listPhysicians.get(i).getLastName());
+            System.out.println(" " + listPhysicians.get(i).getFirstName());
+        }
+    }
+
+    /**
+     * DISPLAY DRUG'S NAME, QUANTITY AND PRICE LIST
+     *
+     * @param drugNames ArrayList
+     */
+    public static void displayListDrugName(ArrayList drugNames) {
+        System.out.println("******** Affichage de la liste des médicaments : ********");
+        for (int i = 0; i < drugsList.size(); i++) {
+
+            System.out.print((i + 1) + " - " + " " + drugsList.get(i).getName().toUpperCase());
+            System.out.println(" | quantité : " + drugsList.get(i).getQuantity() + " | prix : " +  drugsList.get(i).getPrice()+ " euros");
         }
     }
 
@@ -531,15 +545,33 @@ public class PharmaSee {
 //        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 //
 //        System.out.println("Merci de saisir le nom de l'article.");
-//        drugName = sc.nextLine().toUpperCase().trim();  //plus ops a partir d'ici
-//        if (drugName.isEmpty()) {
+//        name = sc.nextLine().toUpperCase().trim();  //plus ops a partir d'ici
+//        if (name.isEmpty()) {
 //            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
 //        } else {
-//            drugName.equalsIgnoreCase(Drug.getDrugsForPrescription().toString());
+//            name.equalsIgnoreCase(Drug.getDrugsForPrescription().toString());
 //        }
 //
 //    }
 
+    /**
+     * DRUG USER CHOICE INSIDE THE DRUGLIST
+     * @param choice
+     * @throws MyException
+     */
+        public static void choiceDrug(int choice) throws MyException {
+            System.out.println("Veuillez taper le numero correspondant au médicament : ");
+            choice = sc.nextInt();
+            if (choice <= 0 || choice > Drug.drugsList.size()) {
+                throw new MyException("Votre choix de médicament est invalide !");
+            } else {
+            //approval('o');
+                Drug d = Drug.drugsList.get(choice - 1);
+                afficheMessage("Médicament sélectionné :  " + d.getName().toUpperCase()+"\nLe tarif unitaire : "
+                        + d.getPrice() + " euros \n ",0);
+            }
+
+        }
 
     /**
      * CREATION PURCHASE
@@ -549,10 +581,26 @@ public class PharmaSee {
 
         System.out.println(" ************  ACHATS  ***************** ");
 
-        System.out.println("Entrer la date au format jj/mm/aaaa");
-        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        System.out.println("La date de l'achat : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        LocalDateTime dateOfPurchase = LocalDateTime.now();
 
-        System.out.println("Ajouter l'ordonnance");// Prescription recupération du medecin et du patient et mutuelle
+//        System.out.println("Entrer la date au format jj/mm/aaaa");
+//        purchaseDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        displayListDrugName(drugsList);
+        System.out.println(Drug.drugsList);
+        System.out.println("Sélectionnez un médicament.");
+        choiceDrug(1);
+
+        displayListPatientsName(listPatients);
+        System.out.println("-->Sélectionnez un patient (ACHAT DIRECT : tapez 1 patient = client anonyme.)");
+        choicePatient(1);
+
+        displayListPhysicianName(listPhysicians);
+        System.out.println("-->Sélectionnez un médecin (ACHAT DIRECT : tapez 1 pour médecin Zéro.)");
+        choicePhysician(1);
+
+        // Prescription recupération du medecin et du patient et mutuelle
         drugsForPrescription = new ArrayList<>();
         System.out.println("Entrez le numéro de l'ordonnance.");
         System.out.println(drugsForPrescription);
@@ -567,11 +615,11 @@ public class PharmaSee {
         Prescription.searchPrescriptionByPatient("Client");
 
         System.out.println("Chercher le produit (médicament). ");// Drug recupération du prix
-        //drugName = sc.nextLine().toUpperCase().trim();
-        if (drugName==null) {
+        String name = sc.nextLine().toUpperCase().trim();
+        if (name==null) {
             throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
         } else {
-            if (drugName.equals(getDrugName()));
+            if (name.equals(getName()));
             System.out.println(drugsList.toString()); // semble OK mais comme il fait le lien ?? Il affiche 2 fois la liste
 
 
@@ -639,7 +687,7 @@ public class PharmaSee {
         System.out.println("Merci d'entrer son prix unitaire");
         double price = sc.nextDouble();
 
-        System.out.println("Voici le total des achats : " + drug + " " + (total = price * quantity) + " euros");
+        System.out.println("Voici le total des achats : " + getName() + " " + (total = price * quantity) + " euros");
 
     }
 
@@ -926,11 +974,11 @@ public class PharmaSee {
 //        double sum = 0;
 //        double total = 0;
 //        System.out.println("Veuillez saisir le nom du médicament");
-//        String drugName = sc.nextLine().toUpperCase().trim();
-//        if (drugName.isEmpty()) {
+//        String drug = sc.nextLine().toUpperCase().trim();
+//        if (drug.isEmpty()) {
 //            throw new MyException("La saisie du nom du médicament est incorrecte ou le médicament n'est pas en stock.");
 //        } else {
-//            drugName.equalsIgnoreCase(Drug.getName().toUpperCase().toString());
+//            drug.equalsIgnoreCase(Drug.getName().toUpperCase().toString());
 //            sum += Drug.getPrice();
 //            total += sum;
 //        }

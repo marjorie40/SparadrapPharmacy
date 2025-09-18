@@ -37,8 +37,9 @@ public class Main {
 
         PharmaSee.afficheMessage("          ***********  Bienvenue  **********", 1);
 
-
-
+        //PharmaSee.choiceDrug(1);
+        //PharmaSee.createPurchase();
+//        PharmaSee.displayListDrugName(drugsList);
 
 
         //PharmaSee.approval('o');
@@ -77,7 +78,7 @@ public class Main {
 //                System.out.println(" Voici les détails concernant ce médecin : ");
 //        }
 
-            Drug drug5 = new Drug("Doliprane 500mg", "Analgésique", 7.50, 35,
+            Drug drug5 = new Drug("Doliprane", "Analgésique", 7.50, 35,
                     LocalDate.of(1963, 11, 15));
 //
 //        PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.of(2025,9,9,12,10),
@@ -101,52 +102,52 @@ public class Main {
                 case 1: //achat
 
                     PharmaSee.displaySelectPurchase("OUI");
-                    PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.now(),drug5, 5, 12.1));
-                    boolean again= true;
+                    //PharmaSee.createDirectPurchase(new DirectPurchase(LocalDateTime.now(),drug5, 5, 12.1));
+                    //boolean again= true;
 
-                    try {
-                        DirectPurchase directPurchase1 = new DirectPurchase(PharmaSee.getDateOfPurchase(),PharmaSee.getDrugName(),
-                                PharmaSee.getQuantity(), PharmaSee.getPrice());
-                        System.out.println(directPurchase1.toString());
-                        DirectPurchase.addDirectPurchase(directPurchase1);
-
-                        System.out.println("Pour ajouter un achat tapez 1, pour valider et finaliser la vente tapez 2, pour annuler et retourner au menu principal tapez 0");
-                        int reply = sc.nextInt();
-                        if (reply == 1) {
-                            PharmaSee.createDirectPurchase(directPurchase1);
-                        } else if (reply == 0) {
-                            //userChoice = PharmaSee.displayMenu();
-                            continue menu;
-                        } else {
-                            if (reply == 2) {
-                                // DirectPurchase.addDirectPurchase(directPurchase1);
-                                System.out.println("Votre achat a été enregistré. ");
-                                System.exit(0);
-                            }
-                        }
-                    } catch (MyException e) {
-                        System.out.println(e.getMessage());
-                    }
+//                    try {
+//                        DirectPurchase directPurchase1 = new DirectPurchase(PharmaSee.getDateOfPurchase(),PharmaSee.getName(),
+//                                PharmaSee.getQuantity(), PharmaSee.getPrice());
+//                        System.out.println(directPurchase1.toString());
+//                        DirectPurchase.addDirectPurchase(directPurchase1);
+//
+//                        System.out.println("Pour ajouter un achat tapez 1, pour valider et finaliser la vente tapez 2, pour annuler et retourner au menu principal tapez 0");
+//                        int reply = sc.nextInt();
+//                        if (reply == 1) {
+//                            PharmaSee.createDirectPurchase(directPurchase1);
+//                        } else if (reply == 0) {
+//                            //userChoice = PharmaSee.displayMenu();
+//                            continue menu;
+//                        } else {
+//                            if (reply == 2) {
+//                                // DirectPurchase.addDirectPurchase(directPurchase1);
+//                                System.out.println("Votre achat a été enregistré. ");
+//                                System.exit(0);
+//                            }
+//                        }
+//                    } catch (MyException e) {
+//                        System.out.println(e.getMessage());
+//                    }
 
 //                    V1 pas OPS
-//                    boolean erreur = true;
-//                    do {
-//                        PharmaSee.createPurchase();
-//
-//                        try {
-//                            Purchase thePurchase = new Purchase(PharmaSee.getPurchaseDate(), PharmaSee.getPrescription(),
-//                                    1, 0.00);
-//                            purchaseList.add(thePurchase);
-//                        } catch (Exception e) {
-//                            PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 0);
-//                        } finally {
-//                            // afficher la nouvelle liste OK jusque la
-//                            PharmaSee.displayPurchaseList(purchaseList);
-//                        }
-//                    } while (erreur);
-//                    PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.", 0);
-//
-//                    break;
+                    boolean erreur = true;
+                    do {
+                        PharmaSee.createPurchase();
+
+                        try {
+                            Purchase thePurchase = new Purchase(PharmaSee.getPurchaseDate(), PharmaSee.getPrescription(),
+                                    1, 0.00);
+                            purchaseList.add(thePurchase);
+                        } catch (Exception e) {
+                            PharmaSee.afficheMessage("Une erreur est survenue !! " + e.getMessage(), 0);
+                        } finally {
+                            // afficher la nouvelle liste OK jusque la
+                            PharmaSee.displayPurchaseList(purchaseList);
+                        }
+                    } while (erreur);
+                    PharmaSee.afficheMessage("L'achat à bien été ajouté à la liste.", 0);
+
+                    break;
                 case 2://historique d'achat
                     //Afficher l'historique d'achat
                     PharmaSee.displayPurchaseHistoryList();
@@ -157,6 +158,7 @@ public class Main {
                         if (reply==2){
                             //rechercher un achats par date
                             PharmaSee.searchPurchaseByDate();
+                            PharmaSee.endProgram();
                             break;
                         } else if (reply==1) {
                             // recherche achats du jour
@@ -166,6 +168,7 @@ public class Main {
                             if (reply == 3)
                                 //recherche achats par période
                                 PharmaSee.searchPurchaseByPeriod();
+                                PharmaSee.endProgram();
                             continue;
                         }
                     } while (failure);
@@ -283,11 +286,11 @@ public class Main {
      */
     public static void datasInside() throws MyException {
 
-        Physician physician0 = new Physician ("Zero","Anonyme", "physician@email.fr",
-                "0303030303", "1 rue de Rien","54000","Nancy", "000000000000");
-        Physician physician1 = new Physician("Whos", "John", "john@whos.dr",
+        Physician physician0 = new Physician ("Zero","Aucun", "physician@email.fr",
+                "0000000000", "1 rue","00000","Nowhere", "000000000000");
+        Physician physician1 = new Physician("Roots", "John", "john@whos.dr",
                 "0383232521", "1 allée fleurie", "54000", "Nancy", "321564587956");
-        Physician physician2 = new Physician("That", "Hanna", "hanna@that.dr",
+        Physician physician2 = new Physician("Grid", "Hanna", "hanna@that.dr",
                 "0383232521", "2 allée fleurie", "54000", "Nancy", "321564587021");
         Physician physician3 = new Physician("Girl", "Meg", "meg@girl.dr",
                 "0383232521", "3 allée fleurie", "54000", "Nancy", "321564584517");
@@ -297,7 +300,7 @@ public class Main {
         Physician.listPhysicians.add(physician2);
         Physician.listPhysicians.add(physician3);
 
-        Mutual mutual0 = new Mutual("Aucun","1 rue Rien","54000","Nancy",
+        Mutual mutual0 = new Mutual("Aucun","1 rue ","00000","Nowhere",
                 "54","0303030303", "sample@email.fr",1);
         Mutual mutual1 = new Mutual("Almutra", "5 promenade des canaux", "54000", "Nancy",
                 "54", "0383908200", "contact@almutra.fr", 0.3);
@@ -310,12 +313,12 @@ public class Main {
         mutualList.add(mutual2);
 
         Patient patient0 = new Patient("Client", "Anonyme", LocalDate.of(1900,1,1),
-                "mutuelle@email.fr", "030303030303","1 rue Rien","54000", "Nancy",
+                "mutuelle@email.fr", "0000000000","1 rue","00000", "Nowhere",
                 "0000000000000",physician0, mutual0);
-        Patient patient1 = new Patient("Daw", "Jack", LocalDate.of(2001, 12, 03),
+        Patient patient1 = new Patient("Toubi", "Jack", LocalDate.of(2001, 12, 03),
                 "jo@ji.fr", "0321415212", "1 boulevard de tout", "54120",
                 "Allain", "1458596523548", physician1, mutual1);
-        Patient patient2 = new Patient("Son", "Philippe", LocalDate.of(1977, 01, 19),
+        Patient patient2 = new Patient("Ngulan", "Philippe", LocalDate.of(1977, 01, 19),
                 "son@gli.fr", "0356655885", "102 avenue haute", "54200", "Toul",
                 "3256987412546", physician2, mutual2);
 

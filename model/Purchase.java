@@ -31,7 +31,6 @@ public class Purchase {
     }
 
     public void setPurchaseDate(LocalDate purchaseDate)  {
-
         this.purchaseDate = purchaseDate;
     }
 
@@ -114,7 +113,7 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return "Purchase { Patient " + getPrescription().getPatient().getLastName().toUpperCase() +
+        return "Achat :  { du Patient : " + getPrescription().getPatient().getLastName().toUpperCase() +
                 " " +  getPrescription().getPatient().getFirstName().toLowerCase() +
                 " --> Date de l'achat : " + getPurchaseDate() +
                 ", ordonnance du Dr " + getPrescription().getPhysician().getLastName().toUpperCase() +
